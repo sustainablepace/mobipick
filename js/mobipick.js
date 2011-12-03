@@ -1,6 +1,8 @@
 /*
- * mobipick for jQuery Mobile Framework.
+ * Mobi Pick - An Android-style datepicker widget for jQuery Mobile.
  * 
+ * Created by Christoph Baudson. Contact me at http://twitter.com/sustainablepace
+ *
  * Licensed under MIT license, see MIT-license.txt
  */
 $.widget( "sustainablepace.mobipick", $.mobile.widget, {
