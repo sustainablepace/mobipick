@@ -1,0 +1,93 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Mobi Pick - Android-style datepicker widget for jQuery Mobile</title> 
+	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<style type="text/css">
+		img[title='Mobi Pick'] {
+			padding-right: 10%;
+			max-width: 25%;
+		}
+		img[title="Fork me on Github"] {
+			display: block;
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: 1
+		}
+		p.description {
+			padding: 0 20%;
+		}
+		div.demos {
+			border-top: 1px dotted gray;
+			border-bottom: 1px dotted gray;
+			margin: 2em 0;
+			padding: 2em 0;
+		}
+		
+	</style>
+	<link rel="stylesheet" href="external/jquery.mobile-1.0.min.css" />
+	<script type="text/javascript" src="external/modernizr.custom.min.js"></script>
+	<script type="text/javascript" src="external/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="external/jquery.mobile-1.0.min.js"></script>
+	<script type="text/javascript">
+		$( document ).ready( function() {
+			// Load mobile datepicker if necessary
+			// from http://css-tricks.com/8678-progressively-enhancing-html5-forms/
+			yepnope({
+				test: Modernizr.inputtypes.date,
+				nope: [
+					"external/xdate.js", 
+					"external/xdate.i18n.js", 
+					"js/mobipick.js", 
+					"demo/demo.js",
+					"css/jqmDatePicker.css"
+				]
+			});
+
+			// Do something with date after change. 
+			// Works with native and mobile datepicker
+			var datepicker = $( "input[type='date']" );
+			datepicker.bind( "change", function() {
+				var date = $( this ).val();
+			});
+		});
+	</script>
+</head>
+<body>
+<a href="http://github.com/sustainablepace"><img src="demo/forkme.png" alt="Fork me on Github" title="Fork me on Github" /></a>
+<div data-role="page" class="ui-body-b">
+	<div data-role="header" class="ui-body-b">
+		<h1>Mobi Pick</h1>
+	</div>
+	<div data-role="content" class="ui-body-b">
+		<img src="demo/animals-whale.png" alt="Mobi Pick" title="Mobi Pick" />
+		<p class="description">
+			<strong>Mobi Pick</strong> is an Android-style datepicker widget for <a href="http://jquerymobile.com">jQuery Mobile</a>. It uses the date library <a href="http://arshaw.com/xdate/">XDate</a>. Mobi Pick allows <a href="http://en.wikipedia.org/wiki/Progressive_enhancement">progressive enhancement</a> for date input fields using <a href="http://www.modernizr.com/">Modernizr</a>.
+			<br><br>
+			If your browser has native support for date inputs, you should see these below. In any other browser, Mobi Pick will appear.
+			<br><br>
+			Feel free to take a look at the source code or <a href="http://github.com/sustainablepace">fork this project on GitHub</a>.
+		</p>
+		<div class="demos">
+			<strong>Demos</strong>
+			<p>		
+				Basic Datepicker
+				<input class="mobipick-demo-basic" type="date" />
+				</p><p>		
+				Datepicker with default date
+				<input class="mobipick-demo-default-date" value="2008-10-17" type="date" />
+				</p><p>		
+				Datepicker with min and max date (for example, dates in 2011)
+				<input class="mobipick-demo-min-max-date" min="2011-01-01" max="2011-12-31" type="date" />
+				</p><p>		
+				Datepicker in spanish
+				<input class="mobipick-demo-spanish" type="date" />
+			</p>
+		</div>
+		Created by <a href="http://twitter.com/sustainablepace">Christoph Baudson</a>. Feel free to check out my <a href="http://blog.baudson.de">blog</a>.
+	</div>
+</div>
+</body>
+</html>
