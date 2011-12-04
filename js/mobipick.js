@@ -85,9 +85,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 				if( !$.isFunction( dateHandler) ) {
 					return;
 				}
-				p.find( selector ).unbind().bind( "tap", $.proxy( function() {
+				p.find( selector ).unbind().bind( "tap", $.proxy( function( evt ) {
 					self._getInstance()._handleDate( dateHandler );
-					return false;
+					evt.stopImmediatePropagation();
 				}, self ));
 			})();
 		}
@@ -99,7 +99,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		var d = dateHandler.apply( this );
 		this._setOption( "date", this._fitDate( d ) );
 	},
-	_confirmDate: function() {
+	_confirmDate: function( evt ) {
 		var proceed = true,
 		    dateChanged = this._getDate().diffDays( this.options.originalDate ) !== 0;
 		
@@ -114,12 +114,12 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 			this._setOption( "date", this.options.originalDate );
 		}
 		this._close();
-		return false;
+		evt.stopImmediatePropagation();
 	},
-	_cancelDate: function() {
+	_cancelDate: function( evt ) {
 		this._setOption( "date", this.options.originalDate );
 		this._confirmDate();
-		return false;
+		evt.stopImmediatePropagation();
 	},
 	_setOption: function( key, value ) {
 		switch( key ) {
