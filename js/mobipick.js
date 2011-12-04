@@ -87,6 +87,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 				}
 				p.find( selector ).unbind().bind( "tap", $.proxy( function() {
 					self._getInstance()._handleDate( dateHandler );
+					return false;
 				}, self ));
 			})();
 		}
@@ -113,10 +114,12 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 			this._setOption( "date", this.options.originalDate );
 		}
 		this._close();
+		return false;
 	},
 	_cancelDate: function() {
 		this._setOption( "date", this.options.originalDate );
 		this._confirmDate();
+		return false;
 	},
 	_setOption: function( key, value ) {
 		switch( key ) {
