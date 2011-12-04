@@ -43,7 +43,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this._setOption( "locale", this.options.locale );
 	},
 	_bindInputClickEvent: function() {
-		this.element.bind( "click", $.proxy( this._getInstance()._open, this ) );
+		this.element.bind( "tap", $.proxy( this._getInstance()._open, this ) );
 	},
 	_init: function() {
 		// fill input field with default value
@@ -51,7 +51,8 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 			this._updateDateInput();
 		}
 	},
-	_open: function() {
+	_open: function( evt ) {
+		evt.stopImmediatePropagation();		
 		if( !this._isXDate( this._getDate() ) ) {
 			this._setOption( "date", this._getInitialDate() );
 		}			
@@ -85,9 +86,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 				if( !$.isFunction( dateHandler) ) {
 					return;
 				}
-				p.find( selector ).unbind().bind( "tap", $.proxy( function( evt ) {
+				p.find( selector ).unbind().bind( "tap", $.proxy( function() {
 					self._getInstance()._handleDate( dateHandler );
-					evt.stopImmediatePropagation();
+					return false;
 				}, self ));
 			})();
 		}
@@ -99,7 +100,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		var d = dateHandler.apply( this );
 		this._setOption( "date", this._fitDate( d ) );
 	},
-	_confirmDate: function( evt ) {
+	_confirmDate: function() {
 		var proceed = true,
 		    dateChanged = this._getDate().diffDays( this.options.originalDate ) !== 0;
 		
@@ -114,12 +115,12 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 			this._setOption( "date", this.options.originalDate );
 		}
 		this._close();
-		evt.stopImmediatePropagation();
+		return false;
 	},
-	_cancelDate: function( evt ) {
+	_cancelDate: function() {
 		this._setOption( "date", this.options.originalDate );
 		this._confirmDate();
-		evt.stopImmediatePropagation();
+		return false;
 	},
 	_setOption: function( key, value ) {
 		switch( key ) {
