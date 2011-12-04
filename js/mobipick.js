@@ -269,8 +269,6 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		return this._getContext().siblings( ".datepicker-click-layer" );
 	},
 	_applyTheme: function() {
-		this.element.attr( "readonly", "readonly" );
-		
 		var p = this._getPicker().parent();
 		p.find( "a" ).attr( "href", "#" ).addClass( "ui-body-b" );
 		p.find( "ul.datepicker-groups ul > li:first-child > a" ).addClass( "ui-corner-top" );
@@ -281,6 +279,8 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this._getOverlay().addClass( "ui-body-a" );	
 	},
 	_createView: function() {
+		this.element.attr( "readonly", "readonly" );
+
 		// Only a single datepicker per context.
 		if( this._getPicker().size() === 0 ) {
 			this._getContext().after( $( this._markup ).hide() );
