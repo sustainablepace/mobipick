@@ -19,6 +19,10 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	_getInstance: function() {
 		return this.element.data( "mobipick" );
 	},
+	_destroy: function() {
+		this._close();
+		this.unbind( "tap" );
+	},
 	_create: function() {
 		this._initOptions();          // parses options
 		this._createView();           // inserts markup into DOM
