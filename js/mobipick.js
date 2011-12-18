@@ -5,7 +5,7 @@
  *
  * Please report issues at https://github.com/sustainablepace/mobipick/issues
  *
- * Version 0.1
+ * Version 0.2
  *
  * Licensed under MIT license, see MIT-license.txt
  */
@@ -17,7 +17,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	widgetEventPrefix: "mobipick",
 	// See http://stackoverflow.com/questions/6577346/jquery-bind-all-events-on-object
 	_blockedEvents: "tap, touchstart, touchmove, blur, focus, focusin, focusout, load, resize, scroll, unload, click, dblclick, mousedown, mouseup, mousemove, mouseover, mouseout, mouseenter, mouseleave, change, select, submit, keydown, keypress, keyup, error",
-	_markup: "<div class='datepicker-click-layer datepicker-overlay'></div><div class='datepicker-main-layer datepicker-overlay'><div class='datepicker-main'><div class='datepicker-date-formatted'>Date</div><ul class='datepicker-groups'><li><ul><li><a class='datepicker-next-day'>+</a></li><li><input type='text' class='datepicker-input datepicker-day' /></li><li><a class='datepicker-prev-day'>-</a></li></ul></li><li><ul><li><a class='datepicker-next-month'>+</a></li><li><input type='text' class='datepicker-input datepicker-month' /></li><li><a class='datepicker-prev-month'>-</a></li></ul></li><li><ul><li><a class='datepicker-next-year'>+</a></li><li><input type='text' class='datepicker-input datepicker-year' /></li><li><a class='datepicker-prev-year'>-</a></li></ul></li></ul><ul class='datepicker-buttons'><li><a class='datepicker-set'>Set</a></li><li><a class='datepicker-cancel'>Cancel</a></li></ul></div></div>",
+	_markup: "<div class='mobipick-click-layer mobipick-overlay'></div><div class='mobipick-main-layer mobipick-overlay'><div class='mobipick-main'><div class='mobipick-date-formatted'>Date</div><ul class='mobipick-groups'><li><ul><li><a class='mobipick-next-day'>+</a></li><li><input type='text' class='mobipick-input mobipick-day' /></li><li><a class='mobipick-prev-day'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-month'>+</a></li><li><input type='text' class='mobipick-input mobipick-month' /></li><li><a class='mobipick-prev-month'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-year'>+</a></li><li><input type='text' class='mobipick-input mobipick-year' /></li><li><a class='mobipick-prev-year'>-</a></li></ul></li></ul><ul class='mobipick-buttons'><li><a class='mobipick-set'>Set</a></li><li><a class='mobipick-cancel'>Cancel</a></li></ul></div></div>",
 	
 	// Controller
 	_getInstance: function() {
@@ -30,7 +30,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	_create: function() {
 		this._initOptions();          // parses options
 		this._createView();           // inserts markup into DOM
-		this._bindInputClickEvent();  // bind click event to input field
+		this._bindInputClickEvent();  // bind click event to input
 	},
 	_initOptions: function() {
 		var date    = this.element.val(),
@@ -51,7 +51,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this._setOption( "locale", this.options.locale );
 	},
 	_bindInputClickEvent: function() {
-		this.element.bind( "tap", $.proxy( this._getInstance()._open, this ) );
+		this.element.bind( "tap", $.proxy( 
+			this._getInstance()._open, this 
+		) );
 	},
 	_init: function() {
 		// fill input field with default value
@@ -76,28 +78,34 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		    p    = this._getPicker();
 		
 		// Set and Cancel buttons
-		p.find( ".datepicker-set"    ).unbind().bind( "tap", $.proxy( this._getInstance()._confirmDate, this ) );
-		p.find( ".datepicker-cancel" ).unbind().bind( "tap", $.proxy( this._getInstance()._cancelDate,  this ) );
+		p.find( ".mobipick-set"    ).unbind().bind( "tap", $.proxy( 
+			this._getInstance()._confirmDate, this
+		) );
+		p.find( ".mobipick-cancel" ).unbind().bind( "tap", $.proxy( 
+			this._getInstance()._cancelDate,  this 
+		) );
 		
 		// +/- Buttons
 		var selectorMap = {
-			".datepicker-prev-day"   : "_prevDay",
-			".datepicker-prev-month" : "_prevMonth",
-			".datepicker-prev-year"  : "_prevYear",
-			".datepicker-next-day"   : "_nextDay",
-			".datepicker-next-month" : "_nextMonth",
-			".datepicker-next-year"  : "_nextYear"
+			".mobipick-prev-day"   : "_prevDay",
+			".mobipick-prev-month" : "_prevMonth",
+			".mobipick-prev-year"  : "_prevYear",
+			".mobipick-next-day"   : "_nextDay",
+			".mobipick-next-month" : "_nextMonth",
+			".mobipick-next-year"  : "_nextYear"
 		};
 		for( var selector in selectorMap ) {
 			(function() {
-				var dateHandler = self[ selectorMap[ selector ] ];
-				if( !$.isFunction( dateHandler) ) {
+				var handler = self[ selectorMap[ selector ] ];
+				if( !$.isFunction( handler) ) {
 					return;
 				}
-				p.find( selector ).unbind().bind( "tap", $.proxy( function() {
-					self._getInstance()._handleDate( dateHandler );
-					return false;
-				}, self ));
+				p.find( selector ).unbind().bind( "tap", $.proxy( 
+					function() {
+						self._getInstance()._handleDate( handler );
+						return false;
+					}, self 
+				));
 			})();
 		}
 	},
@@ -109,13 +117,14 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this._setOption( "date", this._fitDate( d ) );
 	},
 	_confirmDate: function() {
-		var proceed = true,
-		    dateChanged = this._getDate().diffDays( this.options.originalDate ) !== 0;
+		var proceed    = true,
+		    dateDiff   = this._getDate().diffDays( this.options.originalDate ),
+		    hasChanged = dateDiff !== 0;
 		
 		if( this.options.close && typeof this.options.close === "function" ) {
 			proceed = this.options.close.call() !== false;
 		}
-		if( proceed && dateChanged ) {
+		if( proceed && hasChanged ) {
 			this._setOption( "originalDate", this._getDate() );
 			this._updateDateInput();
 			this.element.trigger("change");
@@ -150,6 +159,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 				}
 				break;
 			default:
+				// Do not update view!				
 				return $.Widget.prototype._setOption.apply( this, arguments );
 		}
 		this._updateView();
@@ -164,7 +174,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		if( !this._isDate( date ) ) {
 			throw "Parameter 'date' must be a Date.";
 		}
-		return new XDate( date.getFullYear(), date.getMonth(), date.getDate() );
+		return new XDate( 
+			date.getFullYear(), date.getMonth(), date.getDate() 
+		);
 	},
 	_sanitizeMinDate: function( date ) {
 		var minDate = this._sanitizeDate( date );
@@ -184,8 +196,10 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		return this._getDate() ? this._getDate().toString( this.options.dateFormat ) : '';
 	},
 	localeString: function() {
-		return this._getDate().toString( this._isValidLocale( this.options.locale ) ? 
-			XDate.locales[ this.options.locale ].dateFormat : this.options.dateFormat
+		var l = this.options.locale;
+		return this._getDate().toString( 
+			this._isValidLocale( l ) ? 
+				XDate.locales[ l ].dateFormat : this.options.dateFormat
 		);
 	},
 	_getInitialDate: function() {
@@ -275,19 +289,27 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		return this.element.parents( ":jqmData(role='page')" );
 	},
 	_getPicker: function() {
-		return this._getContext().siblings( ".datepicker-main-layer" ).children();
+		return this._getContext().siblings( ".mobipick-main-layer" ).children();
 	},
 	_getOverlay: function() {
-		return this._getContext().siblings( ".datepicker-click-layer" );
+		return this._getContext().siblings( ".mobipick-click-layer" );
 	},
 	_applyTheme: function() {
 		var p = this._getPicker().parent();
-		p.find( "a" ).attr( "href", "#" ).addClass( "ui-body-b" );
-		p.find( "ul.datepicker-groups ul > li:first-child > a" ).addClass( "ui-corner-top" );
-		p.find( "ul.datepicker-groups ul > li:last-child > a" ).addClass( "ui-corner-bottom" );
-		p.find( "ul.datepicker-buttons a" ).addClass( "ui-corner-all" );
-		p.find( "input" ).attr( "readonly", "readonly" ).addClass( "ui-shadow-inset" );
-		p.find( ".datepicker-main" ).addClass( "ui-body-a ui-corner-all" );
+		p.find( "a" )
+			.attr( "href", "#" )
+			.addClass( "ui-body-b" );
+		p.find( "ul.mobipick-groups ul > li:first-child > a" )
+			.addClass( "ui-corner-top" );
+		p.find( "ul.mobipick-groups ul > li:last-child > a" )
+			.addClass( "ui-corner-bottom" );
+		p.find( "ul.mobipick-buttons a" )
+			.addClass( "ui-corner-all" );
+		p.find( "input" )
+			.attr( "readonly", "readonly" )
+			.addClass( "ui-shadow-inset" );
+		p.find( ".mobipick-main" )
+			.addClass( "ui-body-a ui-corner-all" );
 		this._getOverlay().addClass( "ui-body-a" );	
 	},
 	_createView: function() {
@@ -305,15 +327,16 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		    l    = this.options.locale;
 
 		if( this._isXDate( date ) ) {
-			p.find( ".datepicker-year"  ).val( date.toString( "yyyy" ) );
-			p.find( ".datepicker-month" ).val( date.toString( "MMM"  ) );
-			p.find( ".datepicker-day"   ).val( date.toString( "dd"   ) );
-			p.find( ".datepicker-date-formatted" ).text( this.localeString() );	
+			p.find( ".mobipick-year"  ).val( date.toString( "yyyy" ) );
+			p.find( ".mobipick-month" ).val( date.toString( "MMM"  ) );
+			p.find( ".mobipick-day"   ).val( date.toString( "dd"   ) );
+			p.find( ".mobipick-date-formatted" ).text( this.localeString() );	
 		}
-		var locale = this._isValidLocale( l ) ? ( XDate.defaultLocale = l, XDate.locales[ l ] ) : {};
+		var locale = this._isValidLocale( l ) ? 
+			( XDate.defaultLocale = l, XDate.locales[ l ] ) : {};
 
-		p.find( ".datepicker-set"    ).text( locale.ok     || "Set"    );
-		p.find( ".datepicker-cancel" ).text( locale.cancel || "Cancel" );
+		p.find( ".mobipick-set"    ).text( locale.ok     || "Set"    );
+		p.find( ".mobipick-cancel" ).text( locale.cancel || "Cancel" );
 		p.css("margin-top", parseInt( $( window ).scrollTop(), 10 ) + 50 + "px");
 	},
 	_showView: function() {
