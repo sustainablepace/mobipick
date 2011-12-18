@@ -1,146 +1,160 @@
-module( "Basic setting" );
+/**
+ * Node should be a jQuery collection with a single element.
+ */
+function isSingleJQueryElement( node, msg ) {
+	var actual = {
+		type: typeof node.jquery,
+		size: node.size()
+	};
+	var expected = {
+		type: "string",
+		size: 1
+	};
+	QUnit.push( QUnit.equiv( actual, expected ), actual, expected, msg );
+}
+/**
+ * Node should be a hidden jQuery collection.
+ */
+function isHidden( node, msg ) {
+	var actual = node.css( "display" );
+	var expected = "none";
+
+	QUnit.push( QUnit.equiv( actual, expected ), actual, expected, msg );
+}
+
+module( "Mobi Pick", {
+	setup: function() {
+		this.$dp = $( "#mobipick" );
+	},
+	teardown: function() {
+		$( "#mobipick" ).mobipick( "destroy" );
+	},
+	selectDatepickerItems: function() {
+	    this.$mainLayer  = $( ".datepicker-main-layer" );
+	    this.$clickLayer = $( ".datepicker-click-layer" );
+	    this.$set        = $( ".datepicker-set" );
+	    this.$cancel     = $( ".datepicker-cancel" );
+	    this.$prevDay    = $( ".datepicker-prev-day" );
+	    this.$day        = $( ".datepicker-day" );
+	    this.$nextDay    = $( ".datepicker-next-day" );
+	    this.$prevMonth  = $( ".datepicker-prev-month" );
+	    this.$month      = $( ".datepicker-month" );
+	    this.$nextMonth  = $( ".datepicker-next-month" );
+	    this.$prevYear   = $( ".datepicker-prev-year" );
+	    this.$year       = $( ".datepicker-year" );
+	    this.$nextYear   = $( ".datepicker-next-year" );
+	}
+} );
 test( "Check if Mobi Pick returns the jQuery collection", function() {
-	var $dp = $( "#mobipick" ).mobipick();
-	same( $dp.jquery, "1.6.4", "Mobi Pick returns jQuery collection" );
-	same( $dp.size(), 1, "Mobi Pick returns jQuery collection of size one" );
-	same( $dp.get( 0 ).tagName.toUpperCase(), "INPUT", "Mobi Pick returns jQuery collection of one input." );
-	$dp = $( "#mobipick" ).mobipick( "destroy" );
+	this.$dp.mobipick();
+	same( this.$dp.jquery, "1.6.4", "Mobi Pick returns jQuery collection" );
+	same( this.$dp.size(), 1, "Mobi Pick returns jQuery collection of size one" );
+	same( this.$dp.get( 0 ).tagName.toUpperCase(), "INPUT", "Mobi Pick returns jQuery collection of one input." );
+});
+
+test( "Mobi Pick is not opened before tap", function() {
+	this.$dp.mobipick();
+	
+	this.selectDatepickerItems();
+
+	isSingleJQueryElement( this.$mainLayer  );
+	isSingleJQueryElement( this.$clickLayer );
+	isHidden( this.$mainLayer  );
+	isHidden( this.$clickLayer );
+
+	isSingleJQueryElement( this.$prevDay );
+	isSingleJQueryElement( this.$day     );
+	isSingleJQueryElement( this.$nextDay );
+
+	isSingleJQueryElement( this.$prevMonth );
+	isSingleJQueryElement( this.$month     );
+	isSingleJQueryElement( this.$nextMonth );
+
+	isSingleJQueryElement( this.$prevYear );
+	isSingleJQueryElement( this.$year     );
+	isSingleJQueryElement( this.$nextYear );
+	    
+	isSingleJQueryElement( this.$set    );
+	isSingleJQueryElement( this.$cancel );
+
 });
 
 test( "Mobi Pick opens on tap", function() {
-	var $dp        = $( "#mobipick" ).mobipick().trigger( "tap" ),
-	    $set       = $( ".datepicker-set" ),
-	    $cancel    = $( ".datepicker-cancel" ),
-	    $prevDay   = $( ".datepicker-prev-day" ),
-	    $day       = $( ".datepicker-day" ),
-	    $nextDay   = $( ".datepicker-next-day" ),
-	    $prevMonth = $( ".datepicker-prev-month" ),
-	    $month     = $( ".datepicker-month" ),
-	    $nextMonth = $( ".datepicker-next-month" ),
-	    $prevYear  = $( ".datepicker-prev-year" ),
-	    $year      = $( ".datepicker-year" ),
-	    $nextYear =  $( ".datepicker-next-year" );
+	this.$dp.mobipick().trigger( "tap" );
 	
-	same( typeof $prevDay.jquery, "string", "Is a jQuery collection." );
-	same( $prevDay.size(), 1, "Appears only once." );
-	same( typeof $day.jquery, "string", "Is a jQuery collection." );
-	same( $day.size(), 1, "Appears only once." );
-	same( typeof $nextDay.jquery, "string", "Is a jQuery collection." );
-	same( $nextDay.size(), 1, "Appears only once." );
+	this.selectDatepickerItems();
 
-	same( typeof $prevMonth.jquery, "string", "Is a jQuery collection." );
-	same( $prevMonth.size(), 1, "Appears only once." );
-	same( typeof $month.jquery, "string", "Is a jQuery collection." );
-	same( $month.size(), 1, "Appears only once." );
-	same( typeof $nextMonth.jquery, "string", "Is a jQuery collection." );
-	same( $nextMonth.size(), 1, "Appears only once." );
+	isSingleJQueryElement( this.$prevDay );
+	isSingleJQueryElement( this.$day     );
+	isSingleJQueryElement( this.$nextDay );
 
-	same( typeof $prevYear.jquery, "string", "Is a jQuery collection." );
-	same( $prevYear.size(), 1, "Appears only once." );
-	same( typeof $year.jquery, "string", "Is a jQuery collection." );
-	same( $year.size(), 1, "Appears only once." );
-	same( typeof $nextYear.jquery, "string", "Is a jQuery collection." );
-	same( $nextYear.size(), 1, "Appears only once." );
+	isSingleJQueryElement( this.$prevMonth );
+	isSingleJQueryElement( this.$month     );
+	isSingleJQueryElement( this.$nextMonth );
+
+	isSingleJQueryElement( this.$prevYear );
+	isSingleJQueryElement( this.$year     );
+	isSingleJQueryElement( this.$nextYear );
 	    
-	same( typeof $set.jquery, "string", "Is a jQuery collection." );
-	same( $set.size(), 1, "Appears only once." );
-	same( typeof $cancel.jquery, "string", "Is a jQuery collection." );
-	same( $cancel.size(), 1, "Appears only once." );
-
-	$dp = $( "#mobipick" ).mobipick( "destroy" );
+	isSingleJQueryElement( this.$set    );
+	isSingleJQueryElement( this.$cancel );
 });
 
 test( "Mobi Pick uses current date if no default date is given, names are in english", function() {
-	var $dp          = $( "#mobipick" ).mobipick().trigger( "tap" ),
-	    $set       = $( ".datepicker-set" ),
-	    $cancel    = $( ".datepicker-cancel" ),
-	    $prevDay   = $( ".datepicker-prev-day" ),
-	    $day       = $( ".datepicker-day" ),
-	    $nextDay   = $( ".datepicker-next-day" ),
-	    $prevMonth = $( ".datepicker-prev-month" ),
-	    $month     = $( ".datepicker-month" ),
-	    $nextMonth = $( ".datepicker-next-month" ),
-	    $prevYear  = $( ".datepicker-prev-year" ),
-	    $year      = $( ".datepicker-year" ),
-	    $nextYear =  $( ".datepicker-next-year" );
-	    date         = new Date();
-	
-	same( date.getFullYear().toString(), $year.val(), "If no default date is given, use current date." );
-	same( XDate.locales['en'].monthNamesShort[ date.getMonth() ], $month.val(), "If no default date is given, use current date." );
-	same( date.getDate().toString(), $day.val(), "If no default date is given, use current date." );
+	this.$dp.mobipick().trigger( "tap" );
 
-	$dp = $( "#mobipick" ).mobipick( "destroy" );
+	this.selectDatepickerItems();
+
+	var date         = new Date();
+	same( this.$year.val(),  date.getFullYear().toString(), "If no default date is given, use current date." );
+	same( this.$month.val(), XDate.locales['en'].monthNamesShort[ date.getMonth() ], "If no default date is given, use current date." );
+	same( this.$day.val(),   date.getDate().toString(), "If no default date is given, use current date." );
 });
 
-module( "Default date" );
 test( "Check default date", function() {
-	var $dp          = $( "#mobipick" ).attr( "value", "2008-10-17" ).mobipick(),
-	    date         = new Date( 2008, 9, 17 ),
-	    mobipickDate = $dp.mobipick( "option", "date" );
+	this.$dp.attr( "value", "2008-10-17" ).mobipick();
+
+	var date         = new Date( 2008, 9, 17 ),
+	    mobipickDate = this.$dp.mobipick( "option", "date" );
 
 	same( mobipickDate.constructor, Date, "Option 'date' returns Date object." );
 	same( date.getFullYear(), mobipickDate.getFullYear(), "If no default date is given, use current date." );
 	same( date.getMonth(), mobipickDate.getMonth(), "If no default date is given, use current date." );
 	same( date.getDate(), mobipickDate.getDate(), "If no default date is given, use current date." );
-	$dp = $( "#mobipick" ).mobipick( "destroy" );
 });
 
 test( "Change date prev", function() {
-	var $dp          = $( "#mobipick" ).attr( "value", "2008-10-17" ).mobipick().trigger( "tap" ),
-	    $set       = $( ".datepicker-set" ),
-	    $cancel    = $( ".datepicker-cancel" ),
-	    $prevDay   = $( ".datepicker-prev-day" ),
-	    $day       = $( ".datepicker-day" ),
-	    $nextDay   = $( ".datepicker-next-day" ),
-	    $prevMonth = $( ".datepicker-prev-month" ),
-	    $month     = $( ".datepicker-month" ),
-	    $nextMonth = $( ".datepicker-next-month" ),
-	    $prevYear  = $( ".datepicker-prev-year" ),
-	    $year      = $( ".datepicker-year" ),
-	    $nextYear =  $( ".datepicker-next-year" );
-	    date         = new Date( 2007, 8, 16 );
-	
-	$prevDay.trigger( "tap" );
-	$prevMonth.trigger( "tap" );
-	$prevYear.trigger( "tap" );
-	$set.trigger( "tap" );
+	this.$dp.attr( "value", "2008-10-17" ).mobipick().trigger( "tap" );
 
-	var selectedDate = $dp.mobipick( "option", "date" );
+	this.selectDatepickerItems();
+	this.$prevDay.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$prevYear.trigger( "tap" );
+	this.$set.trigger( "tap" );
 
-	same( date.getFullYear(), selectedDate.getFullYear(), "Date has been modified." );
-	same( date.getMonth(), selectedDate.getMonth(), "Date has been modified." );
-	same( date.getDate(), selectedDate.getDate(), "Date has been modified." );
+	var date         = new Date( 2007, 8, 16 );
+	var selectedDate = this.$dp.mobipick( "option", "date" );
 
-	$dp = $( "#mobipick" ).mobipick( "destroy" );
+	same( selectedDate.getFullYear(), date.getFullYear(), "Date has been modified." );
+	same( selectedDate.getMonth(), date.getMonth(), "Date has been modified." );
+	same( selectedDate.getDate(), date.getDate(), "Date has been modified." );
 });
 
 test( "Change date next", function() {
-	var $dp          = $( "#mobipick" ).attr( "value", "2008-10-17" ).mobipick().trigger( "tap" ),
-	    $set       = $( ".datepicker-set" ),
-	    $cancel    = $( ".datepicker-cancel" ),
-	    $prevDay   = $( ".datepicker-prev-day" ),
-	    $day       = $( ".datepicker-day" ),
-	    $nextDay   = $( ".datepicker-next-day" ),
-	    $prevMonth = $( ".datepicker-prev-month" ),
-	    $month     = $( ".datepicker-month" ),
-	    $nextMonth = $( ".datepicker-next-month" ),
-	    $prevYear  = $( ".datepicker-prev-year" ),
-	    $year      = $( ".datepicker-year" ),
-	    $nextYear =  $( ".datepicker-next-year" );
-	    date         = new Date( 2009, 10, 18 );
-	
-	$nextDay.trigger( "tap" );
-	$nextMonth.trigger( "tap" );
-	$nextYear.trigger( "tap" );
-	$set.trigger( "tap" );
+	this.$dp.attr( "value", "2008-10-17" ).mobipick().trigger( "tap" );
 
-	var selectedDate = $dp.mobipick( "option", "date" );
+	this.selectDatepickerItems();
+	this.$nextDay.trigger( "tap" );
+	this.$nextMonth.trigger( "tap" );
+	this.$nextYear.trigger( "tap" );
+	this.$set.trigger( "tap" );
 
-	same( date.getFullYear(), selectedDate.getFullYear(), "Date has been modified." );
-	same( date.getMonth(), selectedDate.getMonth(), "Date has been modified." );
-	same( date.getDate(), selectedDate.getDate(), "Date has been modified." );
+	var date         = new Date( 2009, 10, 18 );
+	var selectedDate = this.$dp.mobipick( "option", "date" );
 
-	$dp = $( "#mobipick" ).mobipick( "destroy" );
+	same( selectedDate.getFullYear(), date.getFullYear(), "Date has been modified." );
+	same( selectedDate.getMonth(), date.getMonth(), "Date has been modified." );
+	same( selectedDate.getDate(), date.getDate(), "Date has been modified." );
 });
 
 
