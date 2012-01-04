@@ -4,6 +4,8 @@ XDate.locales['fr'] = {
 	dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
 	dayNamesShort: ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'],
 	dateFormat: "dddd, d MMMM yyyy",
+	dateFormatMonth: "MMMM yyyy",
+	dateFormatYear: "yyyy",
 	ok: "Accepter",
 	cancel: "Annuler"
 };
@@ -13,6 +15,8 @@ XDate.locales['de'] = {
 	dayNames: ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],
 	dayNamesShort: ["So","Mo","Di","Mi","Do","Fr","Sa"],
 	dateFormat: "dddd, d.MMMM yyyy",
+	dateFormatMonth: "MMMM yyyy",
+	dateFormatYear: "yyyy",
 	ok: "\u00dcbernehmen",
 	cancel: "Abbrechen"
 };
@@ -22,6 +26,8 @@ XDate.locales['en'] = {
 	dayNames: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
 	dayNamesShort: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
 	dateFormat: "dddd, MMMM d, yyyy",
+	dateFormatMonth: "MMMM yyyy",
+	dateFormatYear: "yyyy",
 	ok: "Accept",
 	cancel: "Cancel"
 };
@@ -31,6 +37,8 @@ XDate.locales['it'] = {
 	dayNames: ["Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato"],
 	dayNamesShort: ["Dom","Lun","Mar","Mer","Gio","Ven","Sab"],
 	dateFormat: "dddd, d MMMM yyyy",
+	dateFormatMonth: "MMMM yyyy",
+	dateFormatYear: "yyyy",
 	ok: "Assumi",
 	cancel: "Annulla"
 };
@@ -40,6 +48,8 @@ XDate.locales['es'] = {
 	dayNames: ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],
 	dayNamesShort: ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"],
 	dateFormat: "dddd, d 'de' MMMM 'de' yyyy",
+	dateFormatMonth: "MMMM 'de' yyyy",
+	dateFormatYear: "yyyy",
 	ok: "Aplicar",
 	cancel: "Cancelar"
 };
@@ -49,6 +59,8 @@ XDate.locales['nl'] = {
 	dayNames: ["Zondag","Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag"],
 	dayNamesShort: ["Zo","Ma","Di","Wo","Do","Vr","Za"],
 	dateFormat: "dddd, d MMMM yyyy",
+	dateFormatMonth: "MMMM yyyy",
+	dateFormatYear: "yyyy",
 	ok: "Overnemen",
 	cancel: "Annuleren"
 };

@@ -5,14 +5,16 @@
  *
  * Please report issues at https://github.com/sustainablepace/mobipick/issues
  *
- * Version 0.2
+ * Version 0.3
  *
  * Licensed under MIT license, see MIT-license.txt
  */
 $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	options: {
-		dateFormat: "yyyy-MM-dd",
-		locale:     "en"
+		dateFormat      : "yyyy-MM-dd",
+		dateFormatMonth : "yyyy-MM",
+		dateFormatYear  : "yyyy",
+		locale          : "en"
 	},
 	widgetEventPrefix: "mobipick",
 	// See http://stackoverflow.com/questions/6577346/jquery-bind-all-events-on-object
@@ -23,9 +25,10 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	_getInstance: function() {
 		return this.element.data( "mobipick" );
 	},
-	_destroy: function() {
+	destroy: function() {
 		this._close();
-		this.unbind( "tap" );
+		this.element.unbind( "tap" );
+		$.Widget.prototype.destroy.call( this );
 	},
 	_create: function() {
 		this._initOptions();          // parses options
@@ -68,10 +71,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		}			
 		this._setOption( "originalDate", this._getDate() );
 
+		this._showView();
 		this._updateView();
 		this._bindEvents();
-		this._showView();
-
 	},
 	_bindEvents: function() {
 		var self = this,
@@ -192,14 +194,25 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		}
 		return maxDate;
 	},
+	_getDateFormat: function() {
+		var a = "dateFormat";
+		if( this.options.accuracy === "month" ) {
+			a += "Month";
+		} else if( this.options.accuracy === "year" ) {
+			a += "Year";
+		}
+		return a;
+	},
 	dateString: function() {
-		return this._getDate() ? this._getDate().toString( this.options.dateFormat ) : '';
+		var a = this._getDateFormat();
+		return this._getDate() ? this._getDate().toString( this.options[ a ] ) : '';
 	},
 	localeString: function() {
-		var l = this.options.locale;
+		var l = this.options.locale,
+		    a = this._getDateFormat();
+		
 		return this._getDate().toString( 
-			this._isValidLocale( l ) ? 
-				XDate.locales[ l ].dateFormat : this.options.dateFormat
+			this._isValidLocale( l ) ? XDate.locales[ l ][ a ] : this.options[ a ]
 		);
 	},
 	_getInitialDate: function() {
@@ -337,7 +350,25 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 
 		p.find( ".mobipick-set"    ).text( locale.ok     || "Set"    );
 		p.find( ".mobipick-cancel" ).text( locale.cancel || "Cancel" );
-		p.css("margin-top", parseInt( $( window ).scrollTop(), 10 ) + 50 + "px");
+		p.css( "margin-top", parseInt( $( window ).scrollTop(), 10 ) + 50 + "px" );
+
+		// Display items based on accuracy setting
+		var columns  = p.find( ".mobipick-groups > li" ).css( "display", "inline-block" );
+		
+		if( this.options.accuracy === "month" ) {
+			p.find( ".mobipick-groups > li:first-child" ).hide();
+			p.css( "width", "250px" );
+		} else if( this.options.accuracy === "year" ) {
+			p.find( ".mobipick-groups > li:last-child" ).siblings().hide();
+			p.css( "width", "200px" );
+		} else {
+			p.css( "width", "300px" );
+		}
+		// minus 1% margin (left and right) per column
+		var columnCount = columns.filter( ":visible" ).size(),
+		    width       = ( ( 100 - columnCount * 2 * 1 ) / columnCount ) + "%";
+		columns.css( "width", width );
+
 	},
 	_showView: function() {
 		this._getOverlay()

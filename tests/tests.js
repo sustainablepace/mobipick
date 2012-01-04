@@ -22,19 +22,9 @@ function isHidden( node, msg ) {
 	QUnit.push( QUnit.equiv( actual, expected ), actual, expected, msg );
 }
 
-/**
- * Node should be a visible jQuery collection.
- */
-function isNotHidden( node, msg ) {
-	var actual = node.css( "display" );
-	var expected = "block";
-
-	QUnit.push( QUnit.equiv( actual, expected ), actual, expected, msg );
-}
-
 module( "Mobi Pick", {
 	setup: function() {
-		this.$mp = $( "#mobipick" );
+		this.$mp = $( "#mobipick" ).val( "" );
 	},
 	teardown: function() {
 		$( "#mobipick" ).mobipick( "destroy" );
@@ -63,32 +53,6 @@ test( "Check if Mobi Pick returns the jQuery collection", function() {
 	same( this.$mp.get( 0 ).tagName.toUpperCase(), "INPUT" );
 });
 
-test( "Mobi Pick is not opened before tap", function() {
-	this.$mp.mobipick();
-	
-	this.selectDatepickerItems();
-
-	isSingleJQueryElement( this.$mainLayer  );
-	isSingleJQueryElement( this.$clickLayer );
-	isHidden( this.$mainLayer  );
-	isHidden( this.$clickLayer );
-
-	isSingleJQueryElement( this.$prevDay );
-	isSingleJQueryElement( this.$day     );
-	isSingleJQueryElement( this.$nextDay );
-
-	isSingleJQueryElement( this.$prevMonth );
-	isSingleJQueryElement( this.$month     );
-	isSingleJQueryElement( this.$nextMonth );
-
-	isSingleJQueryElement( this.$prevYear );
-	isSingleJQueryElement( this.$year     );
-	isSingleJQueryElement( this.$nextYear );
-	    
-	isSingleJQueryElement( this.$set    );
-	isSingleJQueryElement( this.$cancel );
-});
-
 test( "Mobi Pick opens on tap", function() {
 	this.$mp.mobipick().trigger( "tap" );
 	
@@ -108,8 +72,6 @@ test( "Mobi Pick opens on tap", function() {
 	    
 	isSingleJQueryElement( this.$set    );
 	isSingleJQueryElement( this.$cancel );
-	isNotHidden( this.$mainLayer  );
-	isNotHidden( this.$clickLayer );
 });
 
 test( "Defaults are current date and english", function() {
@@ -118,17 +80,17 @@ test( "Defaults are current date and english", function() {
 	this.selectDatepickerItems();
 
 	var date  = new Date(),
-	    year  = date.getFullYear().toString(),
+	    year  = date.getFullYear(),
 	    month = XDate.locales[ 'en' ].monthNamesShort[ date.getMonth() ],
-	    day   = date.getDate().toString();
+	    day   = date.getDate();
 
-	same( this.$year.val(),  year,  "Must be current date." );
+	same( parseInt( this.$year.val(), 10 ),  year,  "Must be current date." );
 	same( this.$month.val(), month, "Must be current date." );
-	same( this.$day.val(),   day,   "Must be current date." );
+	same( parseInt( this.$day.val(), 10 ),   day,   "Must be current date." );
 });
 
 test( "Default date", function() {
-	this.$mp.attr( "value", "2008-10-17" ).mobipick();
+	this.$mp.val( "2008-10-17" ).mobipick();
 
 	var date         = new Date( 2008, 9, 17 ),
 	    mobipickDate = this.$mp.mobipick( "option", "date" );
@@ -140,7 +102,7 @@ test( "Default date", function() {
 });
 
 test( "Change to previous date", function() {
-	this.$mp.attr( "value", "2008-10-17" ).mobipick().trigger( "tap" );
+	this.$mp.val( "2008-10-17" ).mobipick().trigger( "tap" );
 
 	this.selectDatepickerItems();
 
@@ -158,7 +120,7 @@ test( "Change to previous date", function() {
 });
 
 test( "Change to next date", function() {
-	this.$mp.attr( "value", "2008-10-17" ).mobipick().trigger( "tap" );
+	this.$mp.val( "2008-10-17" ).mobipick().trigger( "tap" );
 
 	this.selectDatepickerItems();
 
@@ -170,6 +132,74 @@ test( "Change to next date", function() {
 	var date         = new Date( 2009, 10, 18 );
 	var selectedDate = this.$mp.mobipick( "option", "date" );
 
+	same( selectedDate.getFullYear(), date.getFullYear() );
+	same( selectedDate.getMonth(), date.getMonth() );
+	same( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Accuracy (month)", function() {
+	this.$mp.val( "2010-10" ).mobipick({
+		accuracy: "month"
+	}).trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	isHidden( this.$prevDay.parent().parent().parent()  );
+	isHidden( this.$day.parent().parent().parent()  );
+	isHidden( this.$nextDay.parent().parent().parent()  );
+
+	var date   = new Date(2010, 9, 1),
+	    month  = XDate.locales[ 'en' ].monthNames[ date.getMonth() ],
+		year   = date.getFullYear(),
+		actual = this.$mp.mobipick( "localeString" );
+		
+	same( actual, month + " " + year );
+	
+	this.$set.trigger( "tap" );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+	same( selectedDate.getFullYear(), year );
+	same( selectedDate.getMonth(), date.getMonth() );
+	same( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Accuracy (month, no default)", function() {
+	this.$mp.mobipick({
+		accuracy: "month"
+	}).trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$set.trigger( "tap" );
+
+	var date         = new Date(),
+	    selectedDate = this.$mp.mobipick( "option", "date" );
+	same( selectedDate.getFullYear(), date.getFullYear() );
+	same( selectedDate.getMonth(), date.getMonth() );
+	same( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Accuracy (year)", function() {
+	this.$mp.val( "2000" ).mobipick({
+		accuracy: "year"
+	}).trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	isHidden( this.$prevDay.parent().parent().parent()  );
+	isHidden( this.$day.parent().parent().parent()  );
+	isHidden( this.$nextDay.parent().parent().parent()  );
+
+	isHidden( this.$prevMonth.parent().parent().parent()  );
+	isHidden( this.$month.parent().parent().parent()  );
+	isHidden( this.$nextMonth.parent().parent().parent()  );
+
+	var date   = new Date(2000, 0, 1),
+		actual = this.$mp.mobipick( "localeString" );
+		
+	same( actual, date.getFullYear().toString() );
+	
+	this.$set.trigger( "tap" );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
 	same( selectedDate.getFullYear(), date.getFullYear() );
 	same( selectedDate.getMonth(), date.getMonth() );
 	same( selectedDate.getDate(), date.getDate() );

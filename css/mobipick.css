@@ -10,7 +10,6 @@
 }
 .mobipick-main {
 	width: 300px;
-	min-width: 300px;
 	max-width: 95%;
 	margin: auto;
 	padding: 1%;
@@ -47,9 +46,10 @@
 	font: bold 1.5em Helvetica,Arial,sans-serif;
 }
 .mobipick-groups input {
+	display: block;
 	width: 98%;
 	padding: 0;
-	margin: 0;
+	margin: 0 auto;
 	text-align:center;
 	background-color: #fff;
 	border: 1px solid #B3B3B3;
