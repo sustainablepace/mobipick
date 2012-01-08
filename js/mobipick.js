@@ -5,7 +5,7 @@
  *
  * Please report issues at https://github.com/sustainablepace/mobipick/issues
  *
- * Version 0.3
+ * Version 0.4
  *
  * Licensed under MIT license, see MIT-license.txt
  */
@@ -86,6 +86,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		p.find( ".mobipick-cancel" ).unbind().bind( "tap", $.proxy( 
 			this._getInstance()._cancelDate,  this 
 		) );
+		$( document )
+			.unbind( "keyup", $.proxy( this._cancelDateOnEsc, this ) )
+			.bind(   "keyup", $.proxy( this._cancelDateOnEsc, this ) );
 		
 		// +/- Buttons
 		var selectorMap = {
@@ -140,6 +143,11 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this._setOption( "date", this.options.originalDate );
 		this._confirmDate();
 		return false;
+	},
+	_cancelDateOnEsc: function( evt ) {
+		if( evt.keyCode === 27 ) {
+			this._cancelDate();
+		}
 	},
 	_setOption: function( key, value ) {
 		switch( key ) {
@@ -353,13 +361,13 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		p.css( "margin-top", parseInt( $( window ).scrollTop(), 10 ) + 50 + "px" );
 
 		// Display items based on accuracy setting
-		var columns  = p.find( ".mobipick-groups > li" ).css( "display", "inline-block" );
+		var columns  = p.find( ".mobipick-groups > li" ).removeClass( "mobipick-hide" ).addClass( "mobipick-inline-block" );
 		
 		if( this.options.accuracy === "month" ) {
-			p.find( ".mobipick-groups > li:first-child" ).hide();
-			p.css( "width", "250px" );
+			p.find( ".mobipick-groups > li:first-child" ).addClass( "mobipick-hide" ).removeClass( "mobipick-inline-block" );
+			p.css( "width", "280px" );
 		} else if( this.options.accuracy === "year" ) {
-			p.find( ".mobipick-groups > li:last-child" ).siblings().hide();
+			p.find( ".mobipick-groups > li:last-child" ).siblings().addClass( "mobipick-hide" ).removeClass( "mobipick-inline-block" );
 			p.css( "width", "200px" );
 		} else {
 			p.css( "width", "300px" );

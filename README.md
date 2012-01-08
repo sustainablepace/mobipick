@@ -7,13 +7,16 @@ Demo: [http://mobipick.sustainablepace.net](http://mobipick.sustainablepace.net)
 
 Changelog:
 
+0.4 
+*IE7 support
+*picker closes on Escape keyup
 0.3
-* added accuracy option for month and year pickers
+*added accuracy option for month and year pickers
 
 0.2
-* changed css class prefix from datepicker to mobipick
+*changed css class prefix from datepicker to mobipick
 
 0.1 
-* initial version
+*initial version
 
 

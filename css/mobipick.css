@@ -1,65 +1,83 @@
 .mobipick-overlay {
-	width: 100%; 
-	height: 100%; 
-	position: absolute; 
-	top: 0; 
-	left: 0; 
-	margin: 0; 
-	padding: 0;
-	z-index: 1000;
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	margin:0;
+	padding:0;
+	z-index:1000;
 }
 .mobipick-main {
-	width: 300px;
-	max-width: 95%;
-	margin: auto;
-	padding: 1%;
-	z-index: 1001;
+	width:300px;
+	max-width:95%;
+	margin:auto;
+	padding:1%;
+	z-index:1001;
 }
 .mobipick-date-formatted {
-	min-height: 40px;      /* clock image is 40 px */
-	padding: 1em 0 0 40px; /* clock image is 40 px */
-	background: url(images/clock.png) 3px no-repeat;
-	border-bottom: 1px solid #fff;
+	min-height:40px; /* clock image is 40 px */ 
+	padding:1em 0 0 40px; /* clock image is 40 px */ 
+	background:url(images/clock.png) 3px no-repeat;
+	border-bottom:1px solid #fff;
 }
 .mobipick-main ul {
-	padding: 0;
+	padding:0;
+	margin-left:0;
 }
 .mobipick-main li {
-	list-style: none;
+	list-style:none;
 }
-/*  All buttons */
+/* All buttons */ 
 .mobipick-main a {
-	display: inline-block;
-	width: 100%;
-	padding: 0.5em 0;
-	border: 0;
-	text-decoration: none;
-	text-align: center; 
-	font: bold 1em Helvetica,Arial,sans-serif;
+	display:inline-block;
+	width:100%;
+	padding:0.5em 0;
+	border:0;
+	text-decoration:none;
+	text-align:center;
+	font:bold 1em Helvetica,Arial,sans-serif;
+	zoom:1;
+	*display:inline;
 }
-.mobipick-groups > li {
-	display: inline-block;
-	width: 31.3333333%;
-	margin: 0 1%
+.mobipick-groups>li {
+	display:inline-block;
+	width:31.3333333%;
+	margin:0 1%;
+	zoom:1;
+	*display:inline;
+}
+li.mobipick-inline-block {
+	display:inline-block;
+	zoom:1;
+	*display:inline;
+}
+li.mobipick-hide {
+	display:none;
 }
 .mobipick-groups a {
-	font: bold 1.5em Helvetica,Arial,sans-serif;
+	font:bold 1.5em Helvetica,Arial,sans-serif;
 }
 .mobipick-groups input {
-	display: block;
-	width: 98%;
-	padding: 0;
-	margin: 0 auto;
+	display:block;
+	width:98%;
+	padding:0;
+	margin:0 auto;
 	text-align:center;
-	background-color: #fff;
-	border: 1px solid #B3B3B3;
-	font: bold 1.8em Helvetica,Arial,sans-serif;
-	-webkit-appearance: none;
-	-webkit-border-radius: 0
+	background-color:#fff;
+	border:1px solid #B3B3B3;
+	font:bold 1.8em Helvetica,Arial,sans-serif;
+	-webkit-appearance:none;
+	-webkit-border-radius:0
 }
-/* set and cancel buttons */
-.mobipick-buttons > li {
-	display: inline-block;
-	width: 48%;
-	margin: 0 1%
+/* set and cancel buttons */ 
+.mobipick-buttons {
+	*display:inline;
+}
+.mobipick-buttons>li {
+	display:inline-block;
+	width:48%;
+	margin:0 1%;
+	zoom:1;
+	*display: inline;
 }
