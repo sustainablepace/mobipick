@@ -30,32 +30,9 @@
 		
 	</style>
 	<link rel="stylesheet" href="external/jquery.mobile-1.0.min.css" />
-	<script type="text/javascript" src="external/modernizr.custom.min.js"></script>
 	<script type="text/javascript" src="external/jquery-1.6.4.min.js"></script>
 	<script type="text/javascript" src="external/jquery.mobile-1.0.min.js"></script>
-	<script type="text/javascript">
-		$( document ).ready( function() {
-			// Load mobile datepicker if necessary
-			// from http://css-tricks.com/8678-progressively-enhancing-html5-forms/
-			yepnope({
-				test: Modernizr.inputtypes.date,
-				nope: [
-					"external/xdate.js", 
-					"external/xdate.i18n.js", 
-					"js/mobipick.js", 
-					"demo/demo.js",
-					"css/mobipick.css"
-				]
-			});
 
-			// Do something with date after change. 
-			// Works with native and mobipick datepicker
-			var datepicker = $( "input[type='date']" );
-			datepicker.bind( "change", function() {
-				var date = $( this ).val();
-			});
-		});
-	</script>
 </head>
 <body>
 <a href="https://github.com/sustainablepace/mobipick"><img src="demo/forkme.png" alt="Fork me on Github" title="Fork me on Github" /></a>
@@ -68,34 +45,14 @@
 		<p class="description">
 			<strong>Mobi Pick</strong> is an Android-style datepicker widget for <a href="http://jquerymobile.com">jQuery Mobile</a>. It uses the date library <a href="http://arshaw.com/xdate/">XDate</a> and allows <a href="http://en.wikipedia.org/wiki/Progressive_enhancement">progressive enhancement</a> for date input fields using <a href="http://www.modernizr.com/">Modernizr</a>. Released under <a href="http://en.wikipedia.org/wiki/MIT_License">MIT license</a>.
 			<br><br>
-			If your browser has native support for date inputs, you should see these below. In any other browser, Mobi Pick will appear.
-			<br><br>
 			Feel free to take a look at the source code or <a href="https://github.com/sustainablepace/mobipick">fork this project on GitHub</a>. Feedback is appreciated, just contact me at <a href="http://twitter.com/sustainablepace">Twitter</a>.
 		</p>
 		<div class="demos">
-			<strong>Demos</strong>
-			<p>		
-				Basic Datepicker
-				<input class="mobipick-demo-basic" type="date" />
-			</p><p>		
-				Datepicker with default date
-				<input class="mobipick-demo-default-date" value="2008-10-17" type="date" />
-			</p><p>		
-				Datepicker with min and max date (for example, dates in 2011)
-				<input class="mobipick-demo-min-max-date" min="2011-01-01" max="2011-12-31" type="date" />
-			</p><p>		
-				Datepicker in spanish
-				<input class="mobipick-demo-spanish" type="date" />
-			</p><p>		
-				Monthpicker (no native support)
-				<input class="mobipick-accuracy-month" type="date" />
-			</p><p>		
-				Yearpicker (no native support)
-				<input value="2000" min="1988" max="2012" class="mobipick-accuracy-year" type="date" />
-			</p><p>		
-				Yearpicker with min and max date (no native support)
-				<input value="2012" min="2010" max="2014" class="mobipick-accuracy-year-min-max-date" type="date" />
-			</p>
+			<ul>
+				<li><a rel="external" href="demo.html">Basic demo</a></li>
+				<li><a rel="external" href="demo-advanced.html">Advanced demo</a></li>
+				<li><a rel="external" href="demo-progressive-enhancement.html">Progressive enhancement demo</a></li>
+			</ul>
 		</div>
 		Created by Christoph Baudson. Feel free to check out my <a href="http://blog.baudson.de">blog</a>.
 	</div>

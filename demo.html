@@ -1,0 +1,86 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Mobi Pick - An Android-style datepicker widget for jQuery Mobile - Progressive enhancement demo</title> 
+	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link rel="shortcut icon" href="demo/favicon.ico" type="image/x-icon" />
+	<style type="text/css">
+		div.demo {
+			border-bottom: 1px dotted gray;
+		}
+	</style>
+	<link rel="stylesheet" href="external/jquery.mobile-1.0.min.css" />
+	<link href="css/mobipick.css" rel="stylesheet" type="text/css" />
+	<link href="demo/shCoreDefault.css" rel="stylesheet" type="text/css" />
+	<link href="demo/shThemeDefault.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="demo/shCore.js"></script>
+	<script type="text/javascript" src="demo/shBrushJScript.js"></script>
+	<script type="text/javascript" src="demo/shBrushXml.js"></script>
+	<script type="text/javascript" src="external/modernizr.custom.min.js"></script>
+	<script type="text/javascript" src="external/xdate.js"></script>
+	<script type="text/javascript" src="external/xdate.i18n.js"></script>
+	<script type="text/javascript" src="external/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="external/jquery.mobile-1.0.min.js"></script>
+	<script type="text/javascript" src="js/mobipick.js"></script>
+	<script type="text/javascript">
+		$( "#demo" ).live( "pagecreate", function() {
+			SyntaxHighlighter.all();
+
+			var picker = $( "input[type='text']", this );
+
+			picker.mobipick();
+
+			picker.bind( "change", function() {
+					var date = $( this ).val();
+
+					// formatted date					
+					var dateObject = $( this ).mobipick( "option", "date" );
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="demo" data-role="page" class="ui-body-b">
+		<div data-role="header" class="ui-body-b">
+			<h1>Mobi Pick - Basic demo</h1>
+		</div>
+		<div data-role="content" class="ui-body-b">
+			<div class="demo">			
+				<h1>Basic Datepicker</h1>			
+				<input type="text" />
+
+				<br /><br />
+				Load styles and scripts
+				<pre class="brush:xml">
+				&lt;link rel="stylesheet" type="text/css" href="css/mobipick.css" /&gt;
+				&lt;script type="text/javascript" src="external/xdate.js"&gt;&lt;/script&gt;
+				&lt;script type="text/javascript" src="external/xdate.i18n.js"&gt;&lt;/script&gt;
+				&lt;script type="text/javascript" src="js/mobipick.js"&gt;&lt;/script&gt;</pre>
+
+				Create an input within your jQuery Mobile page. Input type is "text" in order to suppress native datepicker.
+				<pre class="brush:xml">&lt;input type="text" /&gt;</pre>
+
+				Apply Mobi Pick after jQuery Mobile page is created (basic configuration).
+				<pre class="brush: js">
+				$( pageselector ).live( "pagecreate", function() {
+					var picker = $( "input[type='text']", this );
+					picker.mobipick();
+				});</pre>
+
+				Optionally handle date changes (works with native and mobipick datepicker)
+				<pre class="brush: js">
+				picker.bind( "change", function() {
+					// formatted date, like yyyy-mm-dd				
+					var date = $( this ).val();
+
+					// JavaScript Date object
+					var dateObject = $( this ).mobipick( "option", "date" );
+				});</pre>
+			</div>
+			Created by Christoph Baudson. Feel free to check out my <a href="http://blog.baudson.de">blog</a>.
+		</div>
+
+	</div>
+</body>
+</html>

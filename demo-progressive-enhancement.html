@@ -1,0 +1,78 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Mobi Pick - An Android-style datepicker widget for jQuery Mobile - Progressive enhancement demo</title> 
+	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link rel="shortcut icon" href="demo/favicon.ico" type="image/x-icon" />
+	<style type="text/css">
+		div.demo {
+			border-bottom: 1px dotted gray;
+			margin: 2em 0;
+		}
+		input {
+			margin: 2em 0;
+		}
+	</style>
+	<link rel="stylesheet" href="external/jquery.mobile-1.0.min.css" />
+	<link href="demo/shCoreDefault.css" rel="stylesheet" type="text/css" />
+	<link href="demo/shThemeDefault.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="demo/shCore.js"></script>
+	<script type="text/javascript" src="demo/shBrushJScript.js"></script>
+	<script type="text/javascript" src="demo/shBrushXml.js"></script>
+	<script type="text/javascript" src="external/modernizr.custom.min.js"></script>
+	<script type="text/javascript" src="external/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="external/jquery.mobile-1.0.min.js"></script>
+	<script type="text/javascript">
+		// Load mobile datepicker if necessary
+		// from http://css-tricks.com/8678-progressively-enhancing-html5-forms/
+		yepnope({
+			test: Modernizr.inputtypes.date,
+			nope: [
+				"external/xdate.js", 
+				"external/xdate.i18n.js", 
+				"js/mobipick.js", 
+				"demo/mobipick-custom.js",
+				"css/mobipick.css"
+			]
+		});
+
+		$( "#progressiveenhancementdemo" ).live( "pagecreate", function() {
+			SyntaxHighlighter.all();
+		});
+	</script>
+</head>
+<body>
+<div id="progressiveenhancementdemo" data-role="page" class="ui-body-b">
+	<div data-role="header" class="ui-body-b">
+		<h1>Mobi Pick - Progressive enhancement demo</h1>
+	</div>
+	<div data-role="content" class="ui-body-b">
+		<div class="demo">
+			<h1>Progressive enhancement demo</h1>			
+			If your browser has native support for date inputs, you should see these below. In any other browser, Mobi Pick will appear. 
+			<input class="mobipick-demo-basic" type="date" />
+			<strong>In this case you need an date input!</strong>
+			<pre class="brush:xml">&lt;input type="date" /&gt;</pre>
+			Load Mobi Pick and dependencies when browser has support for date inputs. <strong>Requires Modernizr</strong>.
+			<pre class="brush: js">
+			yepnope({
+				test: Modernizr.inputtypes.date,
+				nope: [
+					"external/xdate.js", 
+					"external/xdate.i18n.js", 
+					"js/mobipick.js", 
+					"demo/mobipick-custom.js",
+					"css/mobipick.css"
+				]
+			});</pre>
+
+			<strong>mobipick-custom.js</strong> contains the following code, which applies Mobi Pick to date input (basic configuration). 
+			<pre class="brush: js">
+				$( "input[type='date']" ).mobipick();</pre>
+		</div>
+		Created by Christoph Baudson. Feel free to check out my <a href="http://blog.baudson.de">blog</a>.
+	</div>
+</div>
+</body>
+</html>

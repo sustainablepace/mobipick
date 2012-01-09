@@ -1,0 +1,116 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Mobi Pick - An Android-style datepicker widget for jQuery Mobile - Progressive enhancement demo</title> 
+	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link rel="shortcut icon" href="demo/favicon.ico" type="image/x-icon" />
+	<style type="text/css">
+		div.demo {
+			border-bottom: 1px dotted gray;
+			margin-bottom: 2em;
+		}
+	</style>
+	<link rel="stylesheet" href="external/jquery.mobile-1.0.min.css" />
+	<link href="css/mobipick.css" rel="stylesheet" type="text/css" />
+	<link href="demo/shCoreDefault.css" rel="stylesheet" type="text/css" />
+	<link href="demo/shThemeDefault.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="demo/shCore.js"></script>
+	<script type="text/javascript" src="demo/shBrushJScript.js"></script>
+	<script type="text/javascript" src="demo/shBrushXml.js"></script>
+	<script type="text/javascript" src="external/modernizr.custom.min.js"></script>
+	<script type="text/javascript" src="external/xdate.js"></script>
+	<script type="text/javascript" src="external/xdate.i18n.js"></script>
+	<script type="text/javascript" src="external/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="external/jquery.mobile-1.0.min.js"></script>
+	<script type="text/javascript" src="js/mobipick.js"></script>
+	<script type="text/javascript">
+		$( "#advanceddemo" ).live( "pagecreate", function() {
+			SyntaxHighlighter.all();
+
+			$( "input.mobipick-demo-default-date", this ).mobipick();
+
+			$( "input.mobipick-demo-spanish", this ).mobipick({
+				locale: "es"
+			});
+
+			$( "input.mobipick-demo-min-max-date", this ).mobipick();
+
+			$( "input.mobipick-accuracy-month", this ).mobipick({
+				accuracy: "month"
+			});
+
+			$( "input.mobipick-accuracy-year", this ).mobipick({
+				accuracy: "year"
+			});
+
+			$( "input.mobipick-accuracy-year-min-max-date", this ).mobipick({
+				accuracy: "year"
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="advanceddemo" data-role="page" class="ui-body-b">
+		<div data-role="header" class="ui-body-b">
+			<h1>Mobi Pick - Advanced demo</h1>
+		</div>
+		<div data-role="content" class="ui-body-b">
+			<div class="demo">
+				<h1>Datepicker with default date</h1>
+				<input class="mobipick-demo-default-date" value="2008-10-17" type="text" />
+				Mobi Pick recognizes the value attribute as the default value.
+				<pre class="brush:xml">&lt;input type="text" value="2008-10-17" /&gt;</pre>
+			</div>
+			<div class="demo">
+				<h1>Datepicker with min and max date (for example, dates in 2011)</h1>
+				<input class="mobipick-demo-min-max-date" min="2011-01-01" max="2011-12-31" type="text" />
+				Mobi Pick recognizes the min and max attribute automatically.
+				<pre class="brush:xml">&lt;input type="text" min="2011-01-01" max="2011-12-31" /&gt;</pre>
+			</div>
+			<div class="demo">
+				<h1>Datepicker in spanish</h1>
+				<input class="mobipick-demo-spanish" type="text" />
+				<pre class="brush:xml">&lt;input type="text" /&gt;</pre>
+				Set the locale like this
+				<pre class="brush: js">
+				$( selector ).mobipick({
+					locale: "es" //default is "en", english
+				});</pre>
+			</div>
+			<div class="demo">
+				<h1>Monthpicker (no native support)</h1>
+				<input class="mobipick-accuracy-month" type="text" />
+				<pre class="brush:xml">&lt;input type="text" /&gt;</pre>
+				Set the accuracy to month like this
+				<pre class="brush: js">
+				$( selector ).mobipick({
+					accuracy: "month" //default is "day"
+				});</pre>
+			</div>
+			<div class="demo">
+				<h1>Yearpicker (no native support)</h1>
+				<input class="mobipick-accuracy-year" type="text" />
+				<pre class="brush:xml">&lt;input type="text" /&gt;</pre>
+				Set the accuracy to year like this
+				<pre class="brush: js">
+				$( selector ).mobipick({
+					accuracy: "year" //default is "day"
+				});</pre>
+			</div>
+			<div class="demo">
+				<h1>Yearpicker with min and max date (no native support)</h1>
+				<input value="2012" min="2010" max="2014" class="mobipick-accuracy-year-min-max-date" type="text" />
+				Mobi Pick recognizes the value, min and max attributes automatically. Set the accuracy to year like this
+				<pre class="brush: js">
+				$( selector ).mobipick({
+					accuracy: "year" //default is "day"
+				});</pre>
+				<pre class="brush:xml">&lt;input type="text" value="2012" min="2010" max="2014" /&gt;</pre>
+			</div>
+			Created by Christoph Baudson. Feel free to check out my <a href="http://blog.baudson.de">blog</a>.
+		</div>
+
+	</div>
+</body>
+</html>
