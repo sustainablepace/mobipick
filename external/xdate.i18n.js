@@ -64,3 +64,14 @@ XDate.locales['nl'] = {
 	ok: "Overnemen",
 	cancel: "Annuleren"
 };
+XDate.locales['sv'] = {
+	monthNames: ["Januari","Februari","Mars","April","Maj","Juni","Juli","Augusti","September","Oktober","November","December"],
+	monthNamesShort: ["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"],
+	dayNames: ["Söndag","Måndag","Tisdag","Onsdag","Torsdag","Fredag","Lördag"],
+	dayNamesShort: ["Sö","Må","Ti","On","To","Fr","Lö"],
+	dateFormat: "dddd, d MMMM yyyy",
+	dateFormatMonth: "MMMM yyyy",
+	dateFormatYear: "yyyy",
+	ok: "Klar",
+	cancel: "Avbryt"
+};
