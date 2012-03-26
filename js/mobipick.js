@@ -14,7 +14,8 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		dateFormat      : "yyyy-MM-dd",
 		dateFormatMonth : "yyyy-MM",
 		dateFormatYear  : "yyyy",
-		locale          : "en"
+		locale          : "en",
+		intlStdDate     : true
 	},
 	widgetEventPrefix: "mobipick",
 	// See http://stackoverflow.com/questions/6577346/jquery-bind-all-events-on-object
@@ -41,15 +42,18 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		    maxDate = this.element.attr( "max" );
 
 		if( date ) {
-			this._setOption( "date", new XDate( date ) );
+			this._setOption( "date", date );
+		}
+		if( this.options.date ) {
+			this._setOption( "date", this.options.date );
 		}
 		// Min and max dates can be set in the markup.
 		// See http://dev.w3.org/html5/markup/input.date.html
 		if( maxDate ) {
-			this._setOption( "maxDate", new XDate( maxDate ) );
+			this._setOption( "maxDate", maxDate );
 		}
 		if( minDate ) {
-			this._setOption( "minDate", new XDate( minDate ) );
+			this._setOption( "minDate", minDate );
 		}
 		this._setOption( "locale", this.options.locale );
 	},
@@ -124,7 +128,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	_confirmDate: function() {
 		var proceed    = true,
 		    dateDiff   = this._getDate().diffDays( this.options.originalDate ),
-		    hasChanged = dateDiff !== 0;
+		    hasChanged = dateDiff !== 0 || this.element.val() === "";
 		
 		if( this.options.close && typeof this.options.close === "function" ) {
 			proceed = this.options.close.call() !== false;
@@ -163,6 +167,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 			case "minDate":
 				this.options[ key ] = this._sanitizeMinDate( value ).toDate();
 				break;
+			case "intlStdDate":
+				this.options[ key ] = !!value;
+				break;
 			case "locale":
 				if( this._isValidLocale( value ) ) {
 					this.options.locale = value;
@@ -177,7 +184,11 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	//
 	// Model
 	//
-	_sanitizeDate: function( date ) {
+	_sanitizeDate: function( d ) {
+		var date = d;		
+		if( typeof date === "string" ) {
+			date = new XDate( date );
+		}		
 		if( this._isXDate( date ) ) {
 			date = date.toDate();
 		}
@@ -219,9 +230,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		var l = this.options.locale,
 		    a = this._getDateFormat();
 		
-		return this._getDate().toString( 
+		return this._getDate() ? this._getDate().toString( 
 			this._isValidLocale( l ) ? XDate.locales[ l ][ a ] : this.options[ a ]
-		);
+		) : '';
 	},
 	_getInitialDate: function() {
 		return this._fitDate( new XDate() );
@@ -361,13 +372,19 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		p.css( "margin-top", parseInt( $( window ).scrollTop(), 10 ) + 50 + "px" );
 
 		// Display items based on accuracy setting
-		var columns  = p.find( ".mobipick-groups > li" ).removeClass( "mobipick-hide" ).addClass( "mobipick-inline-block" );
+		var columns  = p.find( ".mobipick-groups > li" )
+			.removeClass( "mobipick-hide" )
+			.addClass( "mobipick-inline-block" );
 		
 		if( this.options.accuracy === "month" ) {
-			p.find( ".mobipick-groups > li:first-child" ).addClass( "mobipick-hide" ).removeClass( "mobipick-inline-block" );
+			p.find( ".mobipick-groups > li:first-child" )
+				.addClass( "mobipick-hide" )
+				.removeClass( "mobipick-inline-block" );
 			p.css( "width", "280px" );
 		} else if( this.options.accuracy === "year" ) {
-			p.find( ".mobipick-groups > li:last-child" ).siblings().addClass( "mobipick-hide" ).removeClass( "mobipick-inline-block" );
+			p.find( ".mobipick-groups > li:last-child" ).siblings()
+				.addClass( "mobipick-hide" )
+				.removeClass( "mobipick-inline-block" );
 			p.css( "width", "200px" );
 		} else {
 			p.css( "width", "300px" );
@@ -398,6 +415,8 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this._getPicker().parent().hide();
 	},
 	_updateDateInput: function() {
-		this.element.val( this.dateString() );
+		this.element.val( this.options.intlStdDate ? 
+			this.dateString() : this.localeString() 
+		);
 	}
 });

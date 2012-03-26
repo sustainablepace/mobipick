@@ -205,4 +205,36 @@ test( "Accuracy (year)", function() {
 	same( selectedDate.getDate(), date.getDate() );
 });
 
+test( "Default date (programmatically)", function() {
+	this.$mp.mobipick({
+		date: "2008-10-17"
+	}).trigger( "tap" );
 
+	this.selectDatepickerItems();
+	this.$set.trigger( "tap" );
+
+	same( "2008-10-17", this.$mp.val() );
+});
+
+test( "Issue #4", function() {
+	this.$mp.mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+	this.$set.trigger( "tap" );
+
+	var date = new Date();
+
+	same( date.toISOString().substr(0, 10), this.$mp.val() );
+});
+
+test( "Human readable", function() {
+	this.$mp.mobipick({
+		intlStdDate: false,
+		date: "2008-10-17"
+	}).trigger( "tap" );
+
+	this.selectDatepickerItems();
+	this.$set.trigger( "tap" );
+
+	same( "Friday, October 17, 2008", this.$mp.val() );
+});

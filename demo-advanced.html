@@ -50,6 +50,18 @@
 			$( "input.mobipick-accuracy-year-min-max-date", this ).mobipick({
 				accuracy: "year"
 			});
+			var mpFrom = $( "input.mobipick-range-date-min", this ).mobipick();
+			var mpTo   = $( "input.mobipick-range-date-max", this ).mobipick();
+			mpFrom.bind( "change", function() {
+				mpTo.mobipick( "option", "minDate", mpFrom.mobipick( "option", "date" ) );
+			});
+			mpTo.bind( "change", function() {
+				mpFrom.mobipick( "option", "maxDate", mpTo.mobipick( "option", "date" ) );
+			});
+			$( "input.mobipick-human-readable" ).mobipick({
+				intlStdDate: false 
+			});
+
 		});
 	</script>
 </head>
@@ -110,6 +122,33 @@
 					accuracy: "year" //default is "day"
 				});</pre>
 				<pre class="brush:xml">&lt;input type="text" value="2012" min="2010" max="2014" /&gt;</pre>
+			</div>
+			<div class="demo">
+				<h1>Range pickers (no native support)</h1>
+				<input class="mobipick-range-date-min" type="text" />
+				<input class="mobipick-range-date-max" type="text" />
+				You need to make use of the change event
+				<pre class="brush: js">
+					var mpFrom = $( ".min-date" ).mobipick();
+					var mpTo   = $( ".max-date" ).mobipick();
+					mpFrom.bind( "change", function() {
+						mpTo.mobipick( "option", "minDate", mpFrom.mobipick( "option", "date" ) );
+					});
+					mpTo.bind( "change", function() {
+						mpFrom.mobipick( "option", "maxDate", mpTo.mobipick( "option", "date" ) );
+					});</pre>
+				<pre class="brush:xml">&lt;input class="min-date" type="text" /&gt;
+&lt;input class="max-date" type="text" /&gt;</pre>
+			</div>
+			<div class="demo">
+				<h1>Human readable dates</h1>
+				<input class="mobipick-human-readable" type="text" />
+				Default output is international standard date (YYYY-MM-DD). If you want to use the localized dates, use these settings
+				<pre class="brush: js">
+					$( selector ).mobipick({
+						intlStdDate: false 
+					});</pre>
+				<pre class="brush:xml">&lt;input type="text" /&gt;</pre>
 			</div>
 			Created by Christoph Baudson. Feel free to check out my <a href="http://blog.baudson.de">blog</a>.
 		</div>

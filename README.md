@@ -11,6 +11,12 @@ Demo
 Changelog
 ---------
 
+### 0.5 ###
+* range picker support
+* custom output format (boolean option intlStdDate)
+* set default date programmatically (String|Date|XDate option date)
+* [https://github.com/sustainablepace/mobipick/issues/4](Issue #4)
+
 ### 0.4 ###
 
 * IE7 support
