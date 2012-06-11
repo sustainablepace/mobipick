@@ -255,5 +255,21 @@ test( "Dynamic min date", function() {
 	same( actualDate.getFullYear(), minDate.getFullYear() );
 	same( actualDate.getMonth(),    minDate.getMonth() );
 	same( actualDate.getDate(),     minDate.getDate() );
+});
+test( "Dynamic max date", function() {
+	var maxDate = (new XDate()).addDays( -4 );
+	this.$mp.mobipick({
+		maxDate: maxDate
+	}).trigger( "tap" );
 
+	this.selectDatepickerItems();
+
+	var actualDate = this.$mp.mobipick( "option", "date" );
+	same( actualDate.getFullYear(), maxDate.getFullYear() );
+	same( actualDate.getMonth(),    maxDate.getMonth() );
+	same( actualDate.getDate(),     maxDate.getDate() );
+	this.$nextDay.trigger( "tap" );
+	same( actualDate.getFullYear(), maxDate.getFullYear() );
+	same( actualDate.getMonth(),    maxDate.getMonth() );
+	same( actualDate.getDate(),     maxDate.getDate() );
 });

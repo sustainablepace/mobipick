@@ -11,6 +11,9 @@ Demo
 Changelog
 ---------
 
+### 0.6 ###
+* set minDate/maxDate programmatically
+
 ### 0.5 ###
 * range picker support
 * custom output format (boolean option intlStdDate)

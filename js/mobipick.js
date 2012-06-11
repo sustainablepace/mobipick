@@ -5,7 +5,7 @@
  *
  * Please report issues at https://github.com/sustainablepace/mobipick/issues
  *
- * Version 0.5
+ * Version 0.6
  *
  * Licensed under MIT license, see MIT-license.txt
  */
