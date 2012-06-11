@@ -238,3 +238,22 @@ test( "Human readable", function() {
 
 	same( "Friday, October 17, 2008", this.$mp.val() );
 });
+
+test( "Dynamic min date", function() {
+	var minDate = (new XDate()).addDays( 4 );
+	this.$mp.mobipick({
+		minDate: minDate
+	}).trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	var actualDate = this.$mp.mobipick( "option", "date" );
+	same( actualDate.getFullYear(), minDate.getFullYear() );
+	same( actualDate.getMonth(),    minDate.getMonth() );
+	same( actualDate.getDate(),     minDate.getDate() );
+	this.$prevDay.trigger( "tap" );
+	same( actualDate.getFullYear(), minDate.getFullYear() );
+	same( actualDate.getMonth(),    minDate.getMonth() );
+	same( actualDate.getDate(),     minDate.getDate() );
+
+});

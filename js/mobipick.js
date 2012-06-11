@@ -37,15 +37,12 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this._bindInputClickEvent();  // bind click event to input
 	},
 	_initOptions: function() {
-		var date    = this.element.val(),
-		    minDate = this.element.attr( "min" ),
-		    maxDate = this.element.attr( "max" );
+		var date    = this.element.val()         || this.options.date,
+		    minDate = this.element.attr( "min" ) || this.options.minDate,
+		    maxDate = this.element.attr( "max" ) || this.options.maxDate;
 
 		if( date ) {
 			this._setOption( "date", date );
-		}
-		if( this.options.date ) {
-			this._setOption( "date", this.options.date );
 		}
 		// Min and max dates can be set in the markup.
 		// See http://dev.w3.org/html5/markup/input.date.html
@@ -70,9 +67,11 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	},
 	_open: function( evt ) {
 		evt.stopImmediatePropagation();		
-		if( !this._isXDate( this._getDate() ) ) {
-			this._setOption( "date", this._getInitialDate() );
+		var date = this._getDate();
+		if( !this._isXDate( date ) ) {
+			date = this._getInitialDate();
 		}			
+		this._setOption( "date", this._fitDate( date ) );
 		this._setOption( "originalDate", this._getDate() );
 
 		this._showView();
@@ -235,7 +234,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		) : '';
 	},
 	_getInitialDate: function() {
-		return this._fitDate( new XDate() );
+		return new XDate();
 	},
 	_fitDate: function( d ) {
 		return this._isAfterMaxDate( d ) ? this._getMaxDate() : 
