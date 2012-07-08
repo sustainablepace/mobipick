@@ -273,3 +273,33 @@ test( "Dynamic max date", function() {
 	same( actualDate.getMonth(),    maxDate.getMonth() );
 	same( actualDate.getDate(),     maxDate.getDate() );
 });
+test( "Reset date", function() {
+	var p = this.$mp.mobipick();
+	var initialDate = p.mobipick( "option", "date" );
+	same(initialDate, null);
+	same(p.val(), "");
+	p.mobipick("option", "date", new Date());
+	var date = p.mobipick("option", "date");
+	ok( date instanceof Date);
+	same(p.val(), "");
+	p.mobipick("updateDateInput");
+	notEqual(p.val(), "");
+	p.mobipick("option", "date", null);
+	var date = p.mobipick("option", "date");
+	same( date, null);
+	notEqual(p.val(), "");
+	p.mobipick("updateDateInput");
+	same(p.val(), "");
+});
+test( "Reinitialize", function() {
+	var p = this.$mp.mobipick();
+	var initialDate = p.mobipick( "option", "date" );
+	same(initialDate, null);
+	p.mobipick("option", "date", new Date());
+	var date = p.mobipick("option", "date");
+	ok( date instanceof Date);
+	
+	p.mobipick("destroy").mobipick();
+	var date = p.mobipick("option", "date");
+	same( date, null);
+});

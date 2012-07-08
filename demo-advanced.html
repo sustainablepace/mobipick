@@ -65,6 +65,10 @@
 			$( "input.mobipick-date-min-dynamic" ).mobipick({
 				minDate: (new XDate()).addDays( 4 )
 			});
+			var pickerWithReset = $( "input.mobipick-reset" ).mobipick();
+			$( "a.reset" ).bind( "tap", function() {
+				pickerWithReset.mobipick("option", "date", null).mobipick("updateDateInput");
+			});
 
 		});
 	</script>
@@ -163,6 +167,21 @@
 						intlStdDate: false 
 					});</pre>
 				<pre class="brush:xml">&lt;input type="text" /&gt;</pre>
+			</div>
+			<div class="demo">
+				<h1>Reset date</h1>
+				<table style="width:100%"><tbody><tr>
+				<td><input class="mobipick-reset" type="text" /></td>
+				<td><a href="#" class="reset" style="padding:4px" data-role="button" data-icon="delete" data-iconpos="notext"></a></td>
+				</tr></tbody></table>
+				Deletes the previously selected date.
+				<pre class="brush: js">
+			var picker = $( selector).mobipick();
+			$( linkSelector ).bind( "tap", function() {
+				picker.mobipick("option", "date", null).mobipick("updateDateInput");
+			});</pre>
+				<pre class="brush:xml">&lt;input type="text" /&gt;
+&lt;a href="#" data-role="button" data-icon="delete" data-iconpos="notext"&gt;&lt;/a&gt;</pre>
 			</div>
 			Created by Christoph Baudson. Feel free to check out my <a href="http://blog.baudson.de">blog</a>.
 		</div>

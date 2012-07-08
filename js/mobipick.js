@@ -11,6 +11,7 @@
  */
 $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	options: {
+		date		: null,
 		dateFormat      : "yyyy-MM-dd",
 		dateFormatMonth : "yyyy-MM",
 		dateFormatYear  : "yyyy",
@@ -62,7 +63,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	_init: function() {
 		// fill input field with default value
 		if( this._isXDate( this._getDate() ) ) {
-			this._updateDateInput();
+			this.updateDateInput();
 		}
 	},
 	_open: function( evt ) {
@@ -134,7 +135,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		}
 		if( proceed && hasChanged ) {
 			this._setOption( "originalDate", this._getDate() );
-			this._updateDateInput();
+			this.updateDateInput();
 			this.element.trigger("change");
 		} else {
 			this._setOption( "date", this.options.originalDate );
@@ -155,7 +156,8 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	_setOption: function( key, value ) {
 		switch( key ) {
 			case "date":
-				this.options[ key ] = this._sanitizeDate( value ).toDate();
+				var sanitized = this._sanitizeDate( value );
+				this.options[ key ] = sanitized ? sanitized.toDate() : sanitized;
 				break;
 			case "originalDate":
 				this.options[ key ] = this._sanitizeDate( value ).toDate();
@@ -185,6 +187,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	//
 	_sanitizeDate: function( d ) {
 		var date = d;		
+		if( date === null ) {
+			return null;
+		}
 		if( typeof date === "string" ) {
 			date = new XDate( date );
 		}		
@@ -413,7 +418,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this._getOverlay().unbind( this._blockedEvents ).hide();
 		this._getPicker().parent().hide();
 	},
-	_updateDateInput: function() {
+	updateDateInput: function() {
 		this.element.val( this.options.intlStdDate ? 
 			this.dateString() : this.localeString() 
 		);
