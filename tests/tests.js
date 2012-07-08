@@ -303,3 +303,21 @@ test( "Reinitialize", function() {
 	var date = p.mobipick("option", "date");
 	same( date, null);
 });
+test("Issue 6", function() {
+	var i = 0;
+	var button = $("<button></button>").text("Large button").css({
+		width: "1000px",
+		height: "1000px"
+	}).bind("tap", function() {
+		i++;
+		alert("!");
+	});
+	$("#qunit-tests").after(button);
+	$(window).scrollTop(10000);
+
+	this.$mp.mobipick().trigger( "tap" );
+	this.selectDatepickerItems();
+	this.$nextDay.trigger( "tap" );
+	
+	same(i, 0);
+});

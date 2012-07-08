@@ -11,6 +11,11 @@ Demo
 Changelog
 ---------
 
+### 0.7 ###
+* [https://github.com/sustainablepace/mobipick/issues/5](Issue #5)
+* new public method updateDateInput
+* possible to set date to null
+
 ### 0.6 ###
 * set minDate/maxDate programmatically
 

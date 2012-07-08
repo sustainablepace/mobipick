@@ -20,7 +20,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	},
 	widgetEventPrefix: "mobipick",
 	// See http://stackoverflow.com/questions/6577346/jquery-bind-all-events-on-object
-	_blockedEvents: "tap, touchstart, touchmove, blur, focus, focusin, focusout, load, resize, scroll, unload, click, dblclick, mousedown, mouseup, mousemove, mouseover, mouseout, mouseenter, mouseleave, change, select, submit, keydown, keypress, keyup, error",
+	_blockedEvents: "tap, touchstart, touchmove, touchend, touchcancel, blur, focus, focusin, focusout, load, resize, scroll, unload, click, dblclick, mousedown, mouseup, mousemove, mouseover, mouseout, mouseenter, mouseleave, change, select, submit, keydown, keypress, keyup, error",
 	_markup: "<div class='mobipick-click-layer mobipick-overlay'></div><div class='mobipick-main-layer mobipick-overlay'><div class='mobipick-main'><div class='mobipick-date-formatted'>Date</div><ul class='mobipick-groups'><li><ul><li><a class='mobipick-next-day'>+</a></li><li><input type='text' class='mobipick-input mobipick-day' /></li><li><a class='mobipick-prev-day'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-month'>+</a></li><li><input type='text' class='mobipick-input mobipick-month' /></li><li><a class='mobipick-prev-month'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-year'>+</a></li><li><input type='text' class='mobipick-input mobipick-year' /></li><li><a class='mobipick-prev-year'>-</a></li></ul></li></ul><ul class='mobipick-buttons'><li><a class='mobipick-set'>Set</a></li><li><a class='mobipick-cancel'>Cancel</a></li></ul></div></div>",
 	
 	// Controller
