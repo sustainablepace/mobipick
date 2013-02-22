@@ -14,7 +14,7 @@
 			margin: 2em 0;
 		}
 	</style>
-	<link rel="stylesheet" href="external/jquery.mobile-1.0.min.css" />
+	<link rel="stylesheet" href="external/jquery.mobile-1.3.0.min.css" />
 	<link href="css/mobipick.css" rel="stylesheet" type="text/css" />
 	<link href="demo/shCoreDefault.css" rel="stylesheet" type="text/css" />
 	<link href="demo/shThemeDefault.css" rel="stylesheet" type="text/css" />
@@ -24,11 +24,11 @@
 	<script type="text/javascript" src="external/modernizr.custom.min.js"></script>
 	<script type="text/javascript" src="external/xdate.js"></script>
 	<script type="text/javascript" src="external/xdate.i18n.js"></script>
-	<script type="text/javascript" src="external/jquery-1.6.4.min.js"></script>
-	<script type="text/javascript" src="external/jquery.mobile-1.0.min.js"></script>
+	<script type="text/javascript" src="external/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="external/jquery.mobile-1.3.0.min.js"></script>
 	<script type="text/javascript" src="js/mobipick.js"></script>
 	<script type="text/javascript">
-		$( "#advanceddemo" ).live( "pagecreate", function() {
+		$( document ).on( "pagecreate", "#advanceddemo", function() {
 			SyntaxHighlighter.all();
 
 			$( "input.mobipick-demo-default-date", this ).mobipick();
@@ -52,10 +52,10 @@
 			});
 			var mpFrom = $( "input.mobipick-range-date-min", this ).mobipick();
 			var mpTo   = $( "input.mobipick-range-date-max", this ).mobipick();
-			mpFrom.bind( "change", function() {
+			mpFrom.on( "change", function() {
 				mpTo.mobipick( "option", "minDate", mpFrom.mobipick( "option", "date" ) );
 			});
-			mpTo.bind( "change", function() {
+			mpTo.on( "change", function() {
 				mpFrom.mobipick( "option", "maxDate", mpTo.mobipick( "option", "date" ) );
 			});
 			$( "input.mobipick-human-readable" ).mobipick({
@@ -66,7 +66,7 @@
 				minDate: (new XDate()).addDays( 4 )
 			});
 			var pickerWithReset = $( "input.mobipick-reset" ).mobipick();
-			$( "a.reset" ).bind( "tap", function() {
+			$( "a.reset" ).on( "tap", function() {
 				pickerWithReset.mobipick("option", "date", null).mobipick("updateDateInput");
 			});
 
@@ -149,10 +149,10 @@
 				<pre class="brush: js">
 					var mpFrom = $( ".min-date" ).mobipick();
 					var mpTo   = $( ".max-date" ).mobipick();
-					mpFrom.bind( "change", function() {
+					mpFrom.on( "change", function() {
 						mpTo.mobipick( "option", "minDate", mpFrom.mobipick( "option", "date" ) );
 					});
-					mpTo.bind( "change", function() {
+					mpTo.on( "change", function() {
 						mpFrom.mobipick( "option", "maxDate", mpTo.mobipick( "option", "date" ) );
 					});</pre>
 				<pre class="brush:xml">&lt;input class="min-date" type="text" /&gt;
@@ -176,14 +176,14 @@
 				</tr></tbody></table>
 				Deletes the previously selected date.
 				<pre class="brush: js">
-			var picker = $( selector).mobipick();
-			$( linkSelector ).bind( "tap", function() {
+			var picker = $( selector ).mobipick();
+			$( linkSelector ).on( "tap", function() {
 				picker.mobipick("option", "date", null).mobipick("updateDateInput");
 			});</pre>
 				<pre class="brush:xml">&lt;input type="text" /&gt;
 &lt;a href="#" data-role="button" data-icon="delete" data-iconpos="notext"&gt;&lt;/a&gt;</pre>
 			</div>
-			Created by Christoph Baudson. Feel free to check out my <a href="http://blog.baudson.de">blog</a>.
+			Created by Christoph Baudson. Feel free to check out my <a href="http://sustainablepace.net">blog</a>.
 		</div>
 
 	</div>

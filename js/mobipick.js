@@ -5,7 +5,7 @@
  *
  * Please report issues at https://github.com/sustainablepace/mobipick/issues
  *
- * Version 0.7
+ * Version 0.8
  *
  * Licensed under MIT license, see MIT-license.txt
  */
@@ -25,7 +25,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	
 	// Controller
 	_getInstance: function() {
-		return this.element.data( "mobipick" );
+		return $.data( this.element, "mobipick", this );
 	},
 	destroy: function() {
 		this._close();
@@ -336,9 +336,17 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 			.attr( "href", "#" )
 			.addClass( "ui-body-b" );
 		p.find( "ul.mobipick-groups ul > li:first-child > a" )
-			.addClass( "ui-corner-top" );
+			.addClass( "ui-corner-all" )
+            .css({
+                "border-bottom-left-radius": "0",
+                "border-bottom-right-radius": "0"
+            });
 		p.find( "ul.mobipick-groups ul > li:last-child > a" )
-			.addClass( "ui-corner-bottom" );
+			.addClass( "ui-corner-all" )
+            .css({
+                "border-top-left-radius": "0",
+                "border-top-right-radius": "0"
+            });
 		p.find( "ul.mobipick-buttons a" )
 			.addClass( "ui-corner-all" );
 		p.find( "input" )

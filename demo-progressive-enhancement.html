@@ -14,15 +14,15 @@
 			margin: 2em 0;
 		}
 	</style>
-	<link rel="stylesheet" href="external/jquery.mobile-1.0.min.css" />
+	<link rel="stylesheet" href="external/jquery.mobile-1.3.0.min.css" />
 	<link href="demo/shCoreDefault.css" rel="stylesheet" type="text/css" />
 	<link href="demo/shThemeDefault.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="demo/shCore.js"></script>
 	<script type="text/javascript" src="demo/shBrushJScript.js"></script>
 	<script type="text/javascript" src="demo/shBrushXml.js"></script>
 	<script type="text/javascript" src="external/modernizr.custom.min.js"></script>
-	<script type="text/javascript" src="external/jquery-1.6.4.min.js"></script>
-	<script type="text/javascript" src="external/jquery.mobile-1.0.min.js"></script>
+	<script type="text/javascript" src="external/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="external/jquery.mobile-1.3.0.min.js"></script>
 	<script type="text/javascript">
 		// Load mobile datepicker if necessary
 		// from http://css-tricks.com/8678-progressively-enhancing-html5-forms/
@@ -37,7 +37,7 @@
 			]
 		});
 
-		$( "#progressiveenhancementdemo" ).live( "pagecreate", function() {
+		$( document ).on( "pagecreate", "#progressiveenhancementdemo", function() {
 			SyntaxHighlighter.all();
 		});
 	</script>
@@ -52,7 +52,7 @@
 			<h1>Progressive enhancement demo</h1>			
 			If your browser has native support for date inputs, you should see these below. In any other browser, Mobi Pick will appear. 
 			<input class="mobipick-demo-basic" type="date" />
-			<strong>In this case you need an date input!</strong>
+			<strong>In this case you need a date input!</strong>
 			<pre class="brush:xml">&lt;input type="date" /&gt;</pre>
 			Load Mobi Pick and dependencies when browser has support for date inputs. <strong>Requires Modernizr</strong>.
 			<pre class="brush: js">

@@ -10,6 +10,8 @@ Demo
 
 Changelog
 ---------
+### 0.8 ###
+* updated to be compatible with jQuery mobile 1.3.0RC1, jQuery 1.9.1, XDate 0.7, Modernizr 2.6.2, QUnit 1.11.0 ([https://github.com/sustainablepace/mobipick/tree/jqm-1.0](version 0.7 branch for compatibility with legacy versions exists))
 
 ### 0.7 ###
 * [https://github.com/sustainablepace/mobipick/issues/5](Issue #5)
