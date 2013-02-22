@@ -36,7 +36,7 @@
 
 			picker.mobipick();
 
-			picker.bind( "change", function() {
+			picker.on( "change", function() {
 					var date = $( this ).val();
 
 					// formatted date					
@@ -75,7 +75,7 @@
 
 				Optionally handle date changes (works with native and mobipick datepicker)
 				<pre class="brush: js">
-				picker.bind( "change", function() {
+				picker.on( "change", function() {
 					// formatted date, like yyyy-mm-dd				
 					var date = $( this ).val();
 
