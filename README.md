@@ -12,6 +12,10 @@ Build status
 ------------
 [![Build Status](https://travis-ci.org/sustainablepace/mobipick.png?branch=master)](https://travis-ci.org/sustainablepace/mobipick)
 
+Tests
+-----
+[http://mobipick.sustainablepace.net/tests/tests.html](http://mobipick.sustainablepace.net/tests/tests.html)
+
 Changelog
 ---------
 ### 0.8 ###
