@@ -8,6 +8,10 @@ Demo
 
 [http://mobipick.sustainablepace.net](http://mobipick.sustainablepace.net)
 
+Build status
+------------
+[![Build Status](https://travis-ci.org/sustainablepace/mobipick.png?branch=master)](https://travis-ci.org/sustainablepace/mobipick)
+
 Changelog
 ---------
 ### 0.8 ###
