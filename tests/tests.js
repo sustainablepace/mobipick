@@ -90,7 +90,7 @@ test( "Defaults are current date and english", function() {
 test( "Default date", function() {
 	this.$mp.val( "2008-10-17" ).mobipick();
 
-	var date         = new Date( 2009, 9, 17 ),
+	var date         = new Date( 2008, 9, 17 ),
 	    mobipickDate = this.$mp.mobipick( "option", "date" );
 
 	deepEqual( mobipickDate.constructor, Date, "Returns Date object." );
