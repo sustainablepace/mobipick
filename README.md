@@ -1,7 +1,7 @@
 Mobi Pick
 =========
 
-Android-style datepicker widget for jQuery Mobile
+Light-weight Android-style datepicker widget for jQuery Mobile. 3KB minified and gzipped.
 
 Demo
 ----
