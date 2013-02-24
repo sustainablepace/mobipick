@@ -3,4 +3,4 @@ node_js:
   - 0.8
   - 0.6
 install: "npm install jshint -g"
-script: "phantomjs tests/runner.js tests/tests.html"
+script: "./script/ci/build.sh"
