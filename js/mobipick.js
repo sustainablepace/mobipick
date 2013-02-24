@@ -356,7 +356,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 			overlayTheme: "a",
 			positionTo: "window",
 			theme: "a",
-			transition: "pop"
+			transition: "none"
 		      });
         $.data( this.element, "mobipick", this );
 		this._applyTheme();
@@ -390,14 +390,14 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 			p.find( ".mobipick-groups > li:first-child" )
 				.addClass( "mobipick-hide" )
 				.removeClass( "mobipick-inline-block" );
-			p.css( "width", "280px" );
+			p.css( "max-width", "280px" );
 		} else if( this.options.accuracy === "year" ) {
 			p.find( ".mobipick-groups > li:last-child" ).siblings()
 				.addClass( "mobipick-hide" )
 				.removeClass( "mobipick-inline-block" );
-			p.css( "width", "200px" );
+			p.css( "max-width", "200px" );
 		} else {
-			p.css( "width", "300px" );
+			p.css( "max-width", "300px" );
 		}
 		// minus 1% margin (left and right) per column
 		var columnCount = columns.filter( ":visible" ).size(),
