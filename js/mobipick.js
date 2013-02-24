@@ -5,10 +5,11 @@
  *
  * Please report issues at https://github.com/sustainablepace/mobipick/issues
  *
- * Version 0.8
+ * Version 0.9
  *
  * Licensed under MIT license, see MIT-license.txt
  */
+(function($,undefined){
 $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	options: {
 		date		: null,
@@ -20,16 +21,13 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	},
 	widgetEventPrefix: "mobipick",
 	// See http://stackoverflow.com/questions/6577346/jquery-bind-all-events-on-object
-	_blockedEvents: "tap, touchstart, touchmove, touchend, touchcancel, blur, focus, focusin, focusout, load, resize, scroll, unload, click, dblclick, mousedown, mouseup, mousemove, mouseover, mouseout, mouseenter, mouseleave, change, select, submit, keydown, keypress, keyup, error",
-	_markup: "<div class='mobipick-click-layer mobipick-overlay'></div><div class='mobipick-main-layer mobipick-overlay'><div class='mobipick-main'><div class='mobipick-date-formatted'>Date</div><ul class='mobipick-groups'><li><ul><li><a class='mobipick-next-day'>+</a></li><li><input type='text' class='mobipick-input mobipick-day' /></li><li><a class='mobipick-prev-day'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-month'>+</a></li><li><input type='text' class='mobipick-input mobipick-month' /></li><li><a class='mobipick-prev-month'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-year'>+</a></li><li><input type='text' class='mobipick-input mobipick-year' /></li><li><a class='mobipick-prev-year'>-</a></li></ul></li></ul><ul class='mobipick-buttons'><li><a class='mobipick-set'>Set</a></li><li><a class='mobipick-cancel'>Cancel</a></li></ul></div></div>",
-	
+	_markup: "<div class='mobipick-main'><div class='mobipick-date-formatted'>Date</div><ul class='mobipick-groups'><li><ul><li><a class='mobipick-next-day'>+</a></li><li><input type='text' class='mobipick-input mobipick-day' /></li><li><a class='mobipick-prev-day'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-month'>+</a></li><li><input type='text' class='mobipick-input mobipick-month' /></li><li><a class='mobipick-prev-month'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-year'>+</a></li><li><input type='text' class='mobipick-input mobipick-year' /></li><li><a class='mobipick-prev-year'>-</a></li></ul></li></ul><ul class='mobipick-buttons'><li><a class='mobipick-set'>Set</a></li><li><a class='mobipick-cancel'>Cancel</a></li></ul></div>",
 	// Controller
-	_getInstance: function() {
-		return $.data( this.element, "mobipick", this );
-	},
+	_picker: $([]),
 	destroy: function() {
 		this._close();
-		this.element.unbind( "tap" );
+		this.element.off( "tap" );
+		this._getPicker().popup("destroy");
 		$.Widget.prototype.destroy.call( this );
 	},
 	_create: function() {
@@ -56,8 +54,8 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this._setOption( "locale", this.options.locale );
 	},
 	_bindInputClickEvent: function() {
-		this.element.bind( "tap", $.proxy( 
-			this._getInstance()._open, this 
+		this.element.on( "tap", $.proxy( 
+			this._open, this 
 		) );
 	},
 	_init: function() {
@@ -84,15 +82,15 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		    p    = this._getPicker();
 		
 		// Set and Cancel buttons
-		p.find( ".mobipick-set"    ).unbind().bind( "tap", $.proxy( 
-			this._getInstance()._confirmDate, this
+		p.find( ".mobipick-set"    ).off().on( "tap", $.proxy( 
+			this._confirmDate, this
 		) );
-		p.find( ".mobipick-cancel" ).unbind().bind( "tap", $.proxy( 
-			this._getInstance()._cancelDate,  this 
+		p.find( ".mobipick-cancel" ).off().on( "tap", $.proxy( 
+			this._cancelDate,  this 
 		) );
 		$( document )
-			.unbind( "keyup", $.proxy( this._cancelDateOnEsc, this ) )
-			.bind(   "keyup", $.proxy( this._cancelDateOnEsc, this ) );
+			.off( "keyup", $.proxy( this._cancelDateOnEsc, this ) )
+			.on(  "keyup", $.proxy( this._cancelDateOnEsc, this ) );
 		
 		// +/- Buttons
 		var selectorMap = {
@@ -109,9 +107,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 				if( !$.isFunction( handler) ) {
 					return;
 				}
-				p.find( selector ).unbind().bind( "tap", $.proxy( 
+				p.find( selector ).off().on( "tap", $.proxy( 
 					function() {
-						self._getInstance()._handleDate( handler );
+						self._handleDate( handler );
 						return false;
 					}, self 
 				));
@@ -322,16 +320,13 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	// View
 	//
 	_getContext: function() {
-		return this.element.parents( ":jqmData(role='page')" );
-	},
-	_getPicker: function() {
-		return this._getContext().siblings( ".mobipick-main-layer" ).children();
-	},
-	_getOverlay: function() {
-		return this._getContext().siblings( ".mobipick-click-layer" );
+    return this.element.parents( ":jqmData(role='page')" );
+  },
+  _getPicker: function() {
+		return this._picker;
 	},
 	_applyTheme: function() {
-		var p = this._getPicker().parent();
+		var p = this._getPicker();
 		p.find( "a" )
 			.attr( "href", "#" )
 			.addClass( "ui-body-b" );
@@ -349,21 +344,22 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
             });
 		p.find( "ul.mobipick-buttons a" )
 			.addClass( "ui-corner-all" );
-		p.find( "input" )
-			.attr( "readonly", "readonly" )
-			.addClass( "ui-shadow-inset" );
-		p.find( ".mobipick-main" )
-			.addClass( "ui-body-a ui-corner-all" );
-		this._getOverlay().addClass( "ui-body-a" );	
-	},
+		p.addClass( "ui-body-a ui-corner-all" );
+	  p.find( "input" )
+      .attr( "readonly", "readonly" )
+      .addClass( "ui-shadow-inset" );},
 	_createView: function() {
 		this.element.attr( "readonly", "readonly" );
-
-		// Only a single datepicker per context.
-		if( this._getPicker().size() === 0 ) {
-			this._getContext().after( $( this._markup ).hide() );
-			this._applyTheme();
-		}
+		this._picker = $( this._markup ).popup({ 
+			dismissible: false,
+			history: false,
+			overlayTheme: "a",
+			positionTo: "window",
+			theme: "a",
+			transition: "pop"
+		      });
+        $.data( this.element, "mobipick", this );
+		this._applyTheme();
 	},
 	_updateView: function() {
 		var date = this._getDate(),
@@ -376,12 +372,14 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 			p.find( ".mobipick-day"   ).val( date.toString( "dd"   ) );
 			p.find( ".mobipick-date-formatted" ).text( this.localeString() );	
 		}
-		var locale = this._isValidLocale( l ) ? 
-			( XDate.defaultLocale = l, XDate.locales[ l ] ) : {};
+		var locale = {};
+		if( this._isValidLocale( l ) ) {
+			XDate.defaultLocale = l;
+			locale = XDate.locales[ l ];
+		}
 
 		p.find( ".mobipick-set"    ).text( locale.ok     || "Set"    );
 		p.find( ".mobipick-cancel" ).text( locale.cancel || "Cancel" );
-		p.css( "margin-top", parseInt( $( window ).scrollTop(), 10 ) + 50 + "px" );
 
 		// Display items based on accuracy setting
 		var columns  = p.find( ".mobipick-groups > li" )
@@ -408,23 +406,12 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 
 	},
 	_showView: function() {
-		this._getOverlay()
-			// semi-transparent overlay overlaps content completely
-			.css({
-				"opacity": 0.7,
-				"height": this._getContext().height() + "px" 
-			})
-			// click layer catches all events and stops bubbling
-			.bind( this._blockedEvents, function() {
-				return false;
-			})
-			.show();
-		
-		this._getPicker().parent().show();
+    var p = this._getPicker();
+		p.show().popup("open").focus();
 	},
 	_hideView: function() {
-		this._getOverlay().unbind( this._blockedEvents ).hide();
-		this._getPicker().parent().hide();
+    var p = this._getPicker();
+      p.popup("close");
 	},
 	updateDateInput: function() {
 		this.element.val( this.options.intlStdDate ? 
@@ -432,3 +419,4 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		);
 	}
 });
+}(jQuery));

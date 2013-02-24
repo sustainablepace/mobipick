@@ -4,7 +4,7 @@
 function isSingleJQueryElement( node, msg ) {
 	var actual = {
 		type: typeof node.jquery,
-		size: node.size()
+		size: node.length
 	};
 	var expected = {
 		type: "string",
@@ -30,25 +30,23 @@ module( "Mobi Pick", {
 		$( "#mobipick" ).mobipick( "destroy" );
 	},
 	selectDatepickerItems: function() {
-	    this.$mainLayer  = $( ".mobipick-main-layer" );
-	    this.$clickLayer = $( ".mobipick-click-layer" );
-	    this.$set        = $( ".mobipick-set" );
-	    this.$cancel     = $( ".mobipick-cancel" );
-	    this.$prevDay    = $( ".mobipick-prev-day" );
-	    this.$day        = $( ".mobipick-day" );
-	    this.$nextDay    = $( ".mobipick-next-day" );
-	    this.$prevMonth  = $( ".mobipick-prev-month" );
-	    this.$month      = $( ".mobipick-month" );
-	    this.$nextMonth  = $( ".mobipick-next-month" );
-	    this.$prevYear   = $( ".mobipick-prev-year" );
-	    this.$year       = $( ".mobipick-year" );
-	    this.$nextYear   = $( ".mobipick-next-year" );
+      var ctx = this.$mp.data( "sustainablepaceMobipick" )._getPicker();
+	    this.$set        = $( ".mobipick-set", ctx );
+	    this.$cancel     = $( ".mobipick-cancel", ctx );
+	    this.$prevDay    = $( ".mobipick-prev-day", ctx );
+	    this.$day        = $( ".mobipick-day", ctx );
+	    this.$nextDay    = $( ".mobipick-next-day", ctx );
+	    this.$prevMonth  = $( ".mobipick-prev-month", ctx );
+	    this.$month      = $( ".mobipick-month", ctx );
+	    this.$nextMonth  = $( ".mobipick-next-month", ctx );
+	    this.$prevYear   = $( ".mobipick-prev-year", ctx );
+	    this.$year       = $( ".mobipick-year", ctx );
+	    this.$nextYear   = $( ".mobipick-next-year", ctx );
 	}
 } );
 
 test( "Check if Mobi Pick returns the jQuery collection", function() {
 	this.$mp.mobipick();
-
 	isSingleJQueryElement( this.$mp  );
 	deepEqual( this.$mp.get( 0 ).tagName.toUpperCase(), "INPUT" );
 });
@@ -183,7 +181,7 @@ test( "Accuracy (year)", function() {
 		accuracy: "year"
 	}).trigger( "tap" );
 
-	this.selectDatepickerItems();
+	this.selectDatepickerItems(this.$mp);
 
 	isHidden( this.$prevDay.parent().parent().parent()  );
 	isHidden( this.$day.parent().parent().parent()  );
