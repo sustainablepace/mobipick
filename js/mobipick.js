@@ -11,7 +11,7 @@
  */
 (function($,undefined){
 $.widget( "sustainablepace.mobipick", $.mobile.widget, {
-	options: {
+          	options: {
 		date		: null,
 		dateFormat      : "yyyy-MM-dd",
 		dateFormatMonth : "yyyy-MM",
