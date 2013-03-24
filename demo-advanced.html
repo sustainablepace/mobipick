@@ -70,11 +70,15 @@
 				pickerWithReset.mobipick("option", "date", null).mobipick("updateDateInput");
 			});
 
+			$( "input.mobipick-mm-dd-yyyy" ).mobipick({
+				dateFormat: "MM-dd-yyyy"
+			});
+
 		});
 	</script>
 </head>
 <body>
-	<div id="advanceddemo" data-role="page" class="ui-body-b">
+	<div id="advanceddemo" data-role="page" data-add-back-btn="true" class="ui-body-b">
 		<div data-role="header" class="ui-body-b">
 			<h1>Mobi Pick - Advanced demo</h1>
 		</div>
@@ -182,6 +186,15 @@
 			});</pre>
 				<pre class="brush:xml">&lt;input type="text" /&gt;
 &lt;a href="#" data-role="button" data-icon="delete" data-iconpos="notext"&gt;&lt;/a&gt;</pre>
+			</div>
+			<div class="demo">
+				<h1>Custom date format</h1>
+				<input class="mobipick-mm-dd-yyyy" type="text" />
+				<pre class="brush: js">
+			var picker = $( selector ).mobipick({
+				dateFormat: "MM-dd-yyyy"
+			});</pre>
+				<pre class="brush:xml">&lt;input type="text" /&gt;</pre>
 			</div>
 			Created by Christoph Baudson. Feel free to check out my <a href="http://sustainablepace.net">blog</a>.
 		</div>

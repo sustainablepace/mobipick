@@ -30,7 +30,7 @@ module( "Mobi Pick", {
 		$( "#mobipick" ).mobipick( "destroy" );
 	},
 	selectDatepickerItems: function() {
-      var ctx = this.$mp.data( "sustainablepaceMobipick" )._getPicker();
+      var ctx = this.$mp.data( "sustainablepaceMobipick" )._picker;
 	    this.$set        = $( ".mobipick-set", ctx );
 	    this.$cancel     = $( ".mobipick-cancel", ctx );
 	    this.$prevDay    = $( ".mobipick-prev-day", ctx );
@@ -128,6 +128,176 @@ test( "Change to next date", function() {
 	this.$set.trigger( "tap" );
 
 	var date         = new Date( 2009, 10, 18 );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+
+	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
+	deepEqual( selectedDate.getMonth(), date.getMonth() );
+	deepEqual( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Change to next month Dec", function() {
+	this.$mp.val( "2008-12-17" ).mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$nextMonth.trigger( "tap" );
+	this.$set.trigger( "tap" );
+
+	var date         = new Date( 2008, 0, 17 );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+
+	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
+	deepEqual( selectedDate.getMonth(), date.getMonth() );
+	deepEqual( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Change to next month Overflow", function() {
+	this.$mp.val( "2013-01-31" ).mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$nextMonth.trigger( "tap" );
+	this.$set.trigger( "tap" );
+
+	var date         = new Date( 2013, 1, 28 );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+
+	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
+	deepEqual( selectedDate.getMonth(), date.getMonth() );
+	deepEqual( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Change to next day leap year", function() {
+	this.$mp.val( "2012-02-28" ).mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$nextDay.trigger( "tap" );
+	this.$set.trigger( "tap" );
+
+	var date         = new Date( 2012, 1, 29 );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+
+	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
+	deepEqual( selectedDate.getMonth(), date.getMonth() );
+	deepEqual( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Change to next day no leap year", function() {
+	this.$mp.val( "2013-02-28" ).mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$nextDay.trigger( "tap" );
+	this.$set.trigger( "tap" );
+
+	var date         = new Date( 2013, 1, 1 );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+
+	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
+	deepEqual( selectedDate.getMonth(), date.getMonth() );
+	deepEqual( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Change to prev day new year", function() {
+	this.$mp.val( "2012-01-01" ).mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$prevDay.trigger( "tap" );
+	this.$set.trigger( "tap" );
+
+	var date         = new Date( 2012, 0, 31 );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+
+	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
+	deepEqual( selectedDate.getMonth(), date.getMonth() );
+	deepEqual( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Change to next day new years eve", function() {
+	this.$mp.val( "2012-12-31" ).mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$nextDay.trigger( "tap" );
+	this.$set.trigger( "tap" );
+
+	var date         = new Date( 2012, 11, 1 );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+
+	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
+	deepEqual( selectedDate.getMonth(), date.getMonth() );
+	deepEqual( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Change to prev day leap year", function() {
+	this.$mp.val( "2012-02-01" ).mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$prevDay.trigger( "tap" );
+	this.$set.trigger( "tap" );
+
+	var date         = new Date( 2012, 1, 29 );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+
+	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
+	deepEqual( selectedDate.getMonth(), date.getMonth() );
+	deepEqual( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Change to prev day no leap year", function() {
+	this.$mp.val( "2013-02-01" ).mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$prevDay.trigger( "tap" );
+	this.$set.trigger( "tap" );
+
+	var date         = new Date( 2013, 1, 28 );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+
+	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
+	deepEqual( selectedDate.getMonth(), date.getMonth() );
+	deepEqual( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Change to prev month Jan", function() {
+	this.$mp.val( "2008-01-17" ).mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$prevMonth.trigger( "tap" );
+	this.$set.trigger( "tap" );
+
+	var date         = new Date( 2008, 11, 17 );
+	var selectedDate = this.$mp.mobipick( "option", "date" );
+
+	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
+	deepEqual( selectedDate.getMonth(), date.getMonth() );
+	deepEqual( selectedDate.getDate(), date.getDate() );
+});
+
+test( "Change to 11 prev month Jan", function() {
+	this.$mp.val( "2008-01-17" ).mobipick().trigger( "tap" );
+
+	this.selectDatepickerItems();
+
+	this.$prevMonth.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$prevMonth.trigger( "tap" );
+	this.$set.trigger( "tap" );
+
+	var date         = new Date( 2008, 1, 17 );
 	var selectedDate = this.$mp.mobipick( "option", "date" );
 
 	deepEqual( selectedDate.getFullYear(), date.getFullYear() );
