@@ -489,3 +489,10 @@ test("Issue 6", function() {
 	
 	deepEqual(i, 0);
 });
+test( "Pull 11", function() {
+	var p = this.$mp.mobipick().trigger( "tap" );
+	this.selectDatepickerItems();
+	this.$cancel.trigger( "tap" );
+	
+	deepEqual( "", this.$mp.val() );
+});
