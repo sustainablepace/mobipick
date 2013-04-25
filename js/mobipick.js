@@ -136,7 +136,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	},
 	_cancelDate: function() {
 		this._setOption( "date", this.options.originalDate );
-		this._confirmDate();
+		this._close();
 		return false;
 	},
 	_cancelDateOnEsc: function( evt ) {
