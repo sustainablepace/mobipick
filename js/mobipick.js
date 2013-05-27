@@ -67,7 +67,8 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		}
 	},
 	_open: function( evt ) {
-		evt.stopImmediatePropagation();
+		evt.stopPropagation();
+		evt.preventDefault();
 		var date = this._getDate();
 		if( !this._isXDate( date ) ) {
 			date = new XDate();
