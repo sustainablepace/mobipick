@@ -471,24 +471,6 @@ test( "Reinitialize", function() {
 	var date = p.mobipick("option", "date");
 	deepEqual( date, null);
 });
-test("Issue 6", function() {
-	var i = 0;
-	var button = $("<button></button>").text("Large button").css({
-		width: "1000px",
-		height: "1000px"
-	}).bind("tap", function() {
-		i++;
-		alert("!");
-	});
-	$("#qunit-tests").after(button);
-	$(window).scrollTop(10000);
-
-	this.$mp.mobipick().trigger( "tap" );
-	this.selectDatepickerItems();
-	this.$nextDay.trigger( "tap" );
-	
-	deepEqual(i, 0);
-});
 test( "Pull 11", function() {
 	var p = this.$mp.mobipick().trigger( "tap" );
 	this.selectDatepickerItems();
@@ -496,3 +478,39 @@ test( "Pull 11", function() {
 	
 	deepEqual( "", this.$mp.val() );
 });
+
+asyncTest( "issue 6", function() {
+	expect( 1 );
+	var p = this.$mp.mobipick(),
+		i = $( "<input type='text' />" ).css({
+			position: "absolute",
+			top: 0,
+			left: 0,
+			width: "10000px",
+			height: "10000px"
+		}),
+		self = this;
+	$("#qunit-tests").after( i );
+	i.on( "tap", function() {
+		ok( true );
+	});
+	$(window).scrollTop(5000);
+	window.setTimeout( function() {
+		p.trigger( "tap" );
+		self.selectDatepickerItems();
+		self.$set.trigger( "tap" );
+	}, 2000 );
+	window.setTimeout( function() {
+		p.trigger( "tap" );
+	}, 4000 );
+	window.setTimeout( function() {
+		self.selectDatepickerItems();
+		self.$set.trigger( "tap" );
+	}, 6000 );
+	window.setTimeout( function() {
+		i.remove();
+		start();
+	}, 10000 );
+	ok ( true );
+});
+
