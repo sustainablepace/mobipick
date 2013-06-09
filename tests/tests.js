@@ -491,7 +491,10 @@ asyncTest( "issue 6", function() {
 		}),
 		self = this;
 	$("#qunit-tests").after( i );
+	// This is the only assertion that should be run.
+	ok ( true );
 	i.on( "tap", function() {
+		// If this "tap" event handler is fired, the test fails (1 != 2).
 		ok( true );
 	});
 	$(window).scrollTop(5000);
@@ -511,6 +514,5 @@ asyncTest( "issue 6", function() {
 		i.remove();
 		start();
 	}, 10000 );
-	ok ( true );
 });
 
