@@ -33,14 +33,14 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	widgetEventPrefix: "mobipick",
 	destroy: function() {
 		this._close();
-		this.element.off( "tap" );
+		this.element.off( "tap click" );
 		this._picker.popup( "destroy" );
 		$.Widget.prototype.destroy.call( this );
 	},
 	_create: function() {
 		this._initOptions();          // parses options
 		this._createView();           // inserts markup into DOM
-		this.element.on( "tap", $.proxy( this._open, this ) );
+		this.element.on( "tap click", $.proxy( this._open, this ) );
 	},
 	_initOptions: function() {
 		var date    = this.element.val()         || this.options.date,
