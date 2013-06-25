@@ -1,3 +1,14 @@
+(function($) {
+    $.fn.extend({
+        triggerAll: function (events, params) {
+            var el = this, i, evts = events.split(' ');
+            for (i = 0; i < evts.length; i += 1) {
+                el.trigger(evts[i], params);
+            }
+            return el;
+        }
+    });
+})(jQuery);
 /**
  * Node should be a jQuery collection with a single element.
  */
@@ -493,26 +504,22 @@ asyncTest( "issue 6", function() {
 	$("#qunit-tests").after( i );
 	// This is the only assertion that should be run.
 	ok ( true );
-	i.on( "tap", function() {
+	i.on( "tap click", function() {
 		// If this "tap" event handler is fired, the test fails (1 != 2).
 		ok( true );
 	});
 	$(window).scrollTop(5000);
 	window.setTimeout( function() {
 		p.trigger( "tap" );
-		self.selectDatepickerItems();
-		self.$set.trigger( "tap" );
 	}, 2000 );
 	window.setTimeout( function() {
-		p.trigger( "tap" );
-	}, 4000 );
-	window.setTimeout( function() {
 		self.selectDatepickerItems();
-		self.$set.trigger( "tap" );
-	}, 6000 );
+		self.$prevDay.triggerAll( "click tap" );
+		self.$set.triggerAll( "click tap" );
+	}, 4000 );
 	window.setTimeout( function() {
 		i.remove();
 		start();
-	}, 10000 );
+	}, 6000 );
 });
 
