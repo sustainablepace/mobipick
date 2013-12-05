@@ -76,7 +76,7 @@
 
             var buttonPicker = $( "input.mobipick-programmatically", this ).mobipick();
             $( "button.mobipick-programmatically", this ).on( "tap click", function() {
-                buttonPicker.trigger( "click" );
+                buttonPicker.mobipick( "open" );
             });
             buttonPicker.on( "change", function() {
                 // use the date after confirmation
@@ -215,7 +215,7 @@
 				<pre class="brush: js">
             var buttonPicker = $( "input", this ).mobipick();
             $( "button" ).on( "tap click", function() {
-                buttonPicker.trigger( "click" );
+                buttonPicker.mobipick( "open" );
             });
             buttonPicker.on( "change", function() {
                 // use the date after confirmation
