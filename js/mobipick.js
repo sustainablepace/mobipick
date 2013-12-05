@@ -40,7 +40,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	_create: function() {
 		this._initOptions();          // parses options
 		this._createView();           // inserts markup into DOM
-		this.element.on( "tap click", $.proxy( this._open, this ) );
+		this.element.on( "tap click", $.proxy( this._clickOpen, this ) );
 	},
 	_initOptions: function() {
 		var date    = this.element.val()         || this.options.date,
@@ -66,9 +66,12 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 			this.updateDateInput();
 		}
 	},
-	_open: function( evt ) {
+	_clickOpen: function( evt ) {
 		evt.stopPropagation();
 		evt.preventDefault();
+		this._open();
+	},
+	_open: funciton() {
 		var date = this._getDate();
 		if( !this._isXDate( date ) ) {
 			date = new XDate();
@@ -376,6 +379,9 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this.element.val( this.options.intlStdDate ?
 			this.dateString() : this.localeString()
 		);
+	},
+	open: function() {
+		this._open();
 	}
 });
 }( jQuery ) );
