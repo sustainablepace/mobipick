@@ -97,3 +97,14 @@ XDate.locales['pt-br'] = {
   ok: "Ok",
   cancel: "Cancelar"
 };
+XDate.locales['hr'] = {
+    monthNames: ["Siječanj","Veljača","Ožujak","Travanj","Svibanj","Lipanj","Srpanj","Kolovoz","Rujan","Listopad","Studeni","Prosinac"],
+    monthNamesShort: ["Sij","Velj","Ožu","Tra","Svi","Lip","Srp","Kol","Ruj","Lis","Stu","Pro"],
+    dayNames: ["Nedjelja","Ponedjeljak","Utorak","Srijeda","Četvrtak","Petak","Subota"],
+    dayNamesShort: ["Ned","Pon","Uto","Sri","Čet","Pet","Sub"],
+    dateFormat: "dddd, d. MMMM yyyy.",
+    dateFormatMonth: "MMMM yyyy",
+    dateFormatYear: "yyyy",
+    ok: "Potvrdi",
+    cancel: "Prekid"
+};
