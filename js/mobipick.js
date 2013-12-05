@@ -1,6 +1,6 @@
 /*
  * Mobi Pick - An Android-style datepicker widget for jQuery Mobile.
- * 
+ *
  * Created by Christoph Baudson.
  *
  * Please report issues at https://github.com/sustainablepace/mobipick/issues
@@ -19,7 +19,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		locale          : "en",
 		intlStdDate     : true,
 		buttonTheme     : "b",
-		popup           : { 
+		popup           : {
 			dismissible: false,
 			history: false,
 			overlayTheme: "a",
@@ -86,12 +86,12 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		    confirm = $.proxy( this._confirmDate,     this ),
 		    cancel  = $.proxy( this._cancelDate,      this ),
 		    esc     = $.proxy( this._cancelDateOnEsc, this );
-		
+
 		// Set and Cancel buttons
 		p.find( ".mobipick-set"    ).off().on( "tap", confirm );
 		p.find( ".mobipick-cancel" ).off().on( "tap", cancel  );
 		$( document ).off( "keyup", esc ).on( "keyup", esc );
-		
+
 		// +/- Buttons
 		var selectorMap = {
 			".mobipick-prev-day"   : "_prevDay",
@@ -121,7 +121,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		var proceed    = true,
 		    dateDiff   = this._getDate().diffDays( this.options.originalDate ),
 		    hasChanged = dateDiff !== 0 || this.element.val() === "";
-		
+
 		if( this.options.close && typeof this.options.close === "function" ) {
 			proceed = this.options.close.call() !== false;
 		}
@@ -182,7 +182,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		var d = date;
 		if( typeof d === "string" ) {
 			d = new XDate( d );
-		}		
+		}
 		if( this._isXDate( d ) ) {
 			d = d.toDate();
 		}
@@ -224,13 +224,13 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		var l    = this.options.locale,
 		    a    = this._getDateFormat(),
 		    date = this._getDate();
-		
-		return !date ? '' : date.toString( 
+
+		return !date ? '' : date.toString(
 			this._isValidLocale( l ) ? XDate.locales[ l ][ a ] : this.options[ a ]
 		);
 	},
 	_fitDate: function( d ) {
-		return this._isAfterMaxDate( d ) ? this._getMaxDate() : 
+		return this._isAfterMaxDate( d ) ? this._getMaxDate() :
 			( this._isBeforeMinDate( d ) ? this._getMinDate() : d );
 	},
 	_isAfterMaxDate: function( d ) {
@@ -261,15 +261,6 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 	_getDate: function() {
 		var date = this.options.date;
 		return this._isDate( date ) ? new XDate( date ) : null;
-	},
-	_getDay: function( d ) {
-		return this._isDate( d ) ? d.getDate() : this._getDate().getDate();
-	},
-	_getMonth: function( d ) {
-		return this._isDate( d ) ? d.getMonth() : this._getDate().getMonth();
-	},
-	_getYear: function( d ) {
-		return this._isDate( d ) ? d.getFullYear() : this._getDate().getFullYear();
 	},
 	_prevDay: function() {
 		return this._addDay( -1 );
@@ -303,7 +294,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		    n  = XDate.getDaysInMonth( dt.getFullYear(), dt.getMonth() );
 		return dt.setDate( ( dt.getDate() - 1 + n + d ) % n + 1 );
 	},
-	
+
 	//
 	// View
 	//
@@ -356,7 +347,7 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		var columns = p.find( ".mobipick-groups > li" )
 			.removeClass( "mobipick-hide" )
 			.addClass( "mobipick-inline-block" );
-		
+
 		if( this.options.accuracy === "month" ) {
 			p.css( "max-width", "280px" )
 				.find( ".mobipick-groups > li:first-child" )
@@ -382,8 +373,8 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		this._picker.popup("close");
 	},
 	updateDateInput: function() {
-		this.element.val( this.options.intlStdDate ? 
-			this.dateString() : this.localeString() 
+		this.element.val( this.options.intlStdDate ?
+			this.dateString() : this.localeString()
 		);
 	}
 });
