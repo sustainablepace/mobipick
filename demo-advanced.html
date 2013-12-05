@@ -1,9 +1,9 @@
-<!DOCTYPE html> 
-<html> 
-<head> 
-	<title>Mobi Pick - An Android-style datepicker widget for jQuery Mobile - Progressive enhancement demo</title> 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mobi Pick - An Android-style datepicker widget for jQuery Mobile - Progressive enhancement demo</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<link rel="shortcut icon" href="demo/favicon.ico" type="image/x-icon" />
 	<style type="text/css">
 		div.demo {
@@ -59,7 +59,7 @@
 				mpFrom.mobipick( "option", "maxDate", mpTo.mobipick( "option", "date" ) );
 			});
 			$( "input.mobipick-human-readable" ).mobipick({
-				intlStdDate: false 
+				intlStdDate: false
 			});
 
 			$( "input.mobipick-date-min-dynamic" ).mobipick({
@@ -74,7 +74,19 @@
 				dateFormat: "MM-dd-yyyy"
 			});
 
-		});
+            var buttonPicker = $( "input.mobipick-programmatically", this ).mobipick();
+            $( "button.mobipick-programmatically", this ).on( "tap click", function() {
+                buttonPicker.trigger( "click" );
+            });
+            buttonPicker.on( "change", function() {
+                // use the date after confirmation
+                window.alert( buttonPicker.mobipick( "option", "date" ) );
+                // or alternatively
+                // window.alert( buttonPicker.mobipick( "dateString" ) );
+                // window.alert( buttonPicker.mobipick( "localeString" ) );
+            })
+
+        });
 	</script>
 </head>
 <body>
@@ -168,7 +180,7 @@
 				Default output is international standard date (YYYY-MM-DD). If you want to use the localized dates, use these settings
 				<pre class="brush: js">
 					$( selector ).mobipick({
-						intlStdDate: false 
+						intlStdDate: false
 					});</pre>
 				<pre class="brush:xml">&lt;input type="text" /&gt;</pre>
 			</div>
@@ -187,15 +199,36 @@
 				<pre class="brush:xml">&lt;input type="text" /&gt;
 &lt;a href="#" data-role="button" data-icon="delete" data-iconpos="notext"&gt;&lt;/a&gt;</pre>
 			</div>
-			<div class="demo">
-				<h1>Custom date format</h1>
-				<input class="mobipick-mm-dd-yyyy" type="text" />
+            <div class="demo">
+                <h1>Custom date format</h1>
+                <input class="mobipick-mm-dd-yyyy" type="text" />
 				<pre class="brush: js">
 			var picker = $( selector ).mobipick({
 				dateFormat: "MM-dd-yyyy"
 			});</pre>
-				<pre class="brush:xml">&lt;input type="text" /&gt;</pre>
-			</div>
+                <pre class="brush:xml">&lt;input type="text" /&gt;</pre>
+            </div>
+            <div class="demo">
+                <h1>Programmatically open picker.</h1>
+                <input class="mobipick-programmatically" type="hidden" />
+                <button class="mobipick-programmatically" value="click to open picker"></button>
+				<pre class="brush: js">
+            var buttonPicker = $( "input", this ).mobipick();
+            $( "button" ).on( "tap click", function() {
+                buttonPicker.trigger( "click" );
+            });
+            buttonPicker.on( "change", function() {
+                // use the date after confirmation
+                window.alert( buttonPicker.mobipick( "date" ) );
+                // or alternatively
+                // window.alert( buttonPicker.mobipick( "dateString" ) );
+                // window.alert( buttonPicker.mobipick( "localeString" ) );
+            })
+			    </pre>
+                <pre class="brush:xml">&lt;input type="hidden" /&gt;
+&lt;button type="hidden" value="click to open picker"/&gt;&lt;/button&gt;
+                </pre>
+            </div>
 			Created by Christoph Baudson. Feel free to check out my <a href="http://sustainablepace.net">blog</a>.
 		</div>
 
