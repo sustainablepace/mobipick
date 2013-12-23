@@ -3,6 +3,8 @@ Mobi Pick
 
 Light-weight Android-style datepicker widget for jQuery Mobile. 3KB minified and gzipped.
 
+ [![gittip](https://raw.github.com/sustainablepace/mobipick/master/donate.png)](https://www.gittip.com/sustainablepace)
+
 Demo
 ----
 
