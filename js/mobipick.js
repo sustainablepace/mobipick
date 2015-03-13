@@ -9,8 +9,16 @@
  *
  * Licensed under MIT license, see MIT-license.txt
  */
-( function( $, undefined ){
-$.widget( "sustainablepace.mobipick", $.mobile.widget, {
+(function( factory ) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define( ['jquery', 'jquery.mobile'], factory );
+	} else {
+		// Browser globals
+		factory( jQuery, jQuery.mobile );
+	}
+}( function( $, $mobile, undefined ){
+$.widget( "sustainablepace.mobipick", $mobile.widget, {
 	options: {
 		date            : null,
 		dateFormat      : "yyyy-MM-dd",
@@ -380,4 +388,4 @@ $.widget( "sustainablepace.mobipick", $.mobile.widget, {
 		);
 	}
 });
-}( jQuery ) );
+}));
