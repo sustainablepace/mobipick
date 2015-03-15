@@ -24,6 +24,7 @@ $.widget( "sustainablepace.mobipick", $mobile.widget, {
 		dateFormat      : "yyyy-MM-dd",
 		dateFormatMonth : "yyyy-MM",
 		dateFormatYear  : "yyyy",
+		inputOrder      : "d m y",
 		locale          : "en",
 		intlStdDate     : true,
 		buttonTheme     : "b",
@@ -308,7 +309,12 @@ $.widget( "sustainablepace.mobipick", $mobile.widget, {
 	//
 	// View
 	//
-	_markup: "<div class='mobipick-main'><div class='mobipick-date-formatted'>Date</div><ul class='mobipick-groups'><li><ul><li><a class='mobipick-next-day'>+</a></li><li><input type='text' class='mobipick-input mobipick-day' /></li><li><a class='mobipick-prev-day'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-month'>+</a></li><li><input type='text' class='mobipick-input mobipick-month' /></li><li><a class='mobipick-prev-month'>-</a></li></ul></li><li><ul><li><a class='mobipick-next-year'>+</a></li><li><input type='text' class='mobipick-input mobipick-year' /></li><li><a class='mobipick-prev-year'>-</a></li></ul></li></ul><ul class='mobipick-buttons'><li><a class='mobipick-set'>Set</a></li><li><a class='mobipick-cancel'>Cancel</a></li></ul></div>",
+	_markup_header: "<div class='mobipick-main'><div class='mobipick-date-formatted'>Date</div><ul class='mobipick-groups'>",
+	_markup_d: "<li><ul><li><a class='mobipick-next-day'>+</a></li><li><input type='text' class='mobipick-input mobipick-day' /></li><li><a class='mobipick-prev-day'>-</a></li></ul></li>",
+	_markup_m: "<li><ul><li><a class='mobipick-next-month'>+</a></li><li><input type='text' class='mobipick-input mobipick-month' /></li><li><a class='mobipick-prev-month'>-</a></li></ul></li>",
+	_markup_y: "<li><ul><li><a class='mobipick-next-year'>+</a></li><li><input type='text' class='mobipick-input mobipick-year' /></li><li><a class='mobipick-prev-year'>-</a></li></ul></li>",
+	_markup_trailer: "</ul><ul class='mobipick-buttons'><li><a class='mobipick-set'>Set</a></li><li><a class='mobipick-cancel'>Cancel</a></li></ul></div>",
+
 	_applyTheme: function() {
 		var p       = this._picker,
 		    buttons = {
@@ -330,7 +336,12 @@ $.widget( "sustainablepace.mobipick", $mobile.widget, {
 	},
 	_createView: function() {
 		this.element.attr( "readonly", "readonly" );
-		this._picker = $( this._markup ).popup( this.options.popup );
+		var markup = this._markup_header +
+			this.options.inputOrder.split(" ").map(function(v, i, a) {
+				return this["_markup_" + v];
+			}, this).join("") +
+			this._markup_trailer;
+		this._picker = $( markup ).popup( this.options.popup );
 		$.data( this.element, "mobipick", this );
 		this._applyTheme();
 	},

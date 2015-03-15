@@ -489,6 +489,24 @@ test( "Pull 11", function() {
 	
 	deepEqual( "", this.$mp.val() );
 });
+test( "inputOrder default", function() {
+	var p = this.$mp.mobipick().trigger( "tap" );
+	this.selectDatepickerItems();
+	ok(/mobipick-day.*mobipick-month.*mobipick-year/.test(
+		p.data("sustainablepaceMobipick")._picker[0].innerHTML
+	));
+	this.$cancel.trigger( "tap" );
+});
+test( "inputOrder ISO 8601", function() {
+	var p = this.$mp.mobipick({
+		inputOrder: "y m d"
+	}).trigger( "tap" );
+	this.selectDatepickerItems();
+	ok(/mobipick-year.*mobipick-month.*mobipick-day/.test(
+		p.data("sustainablepaceMobipick")._picker[0].innerHTML
+	));
+	this.$cancel.trigger( "tap" );
+});
 
 asyncTest( "issue 6", function() {
 	expect( 1 );
